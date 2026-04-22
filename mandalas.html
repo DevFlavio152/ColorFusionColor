@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Color Fusion Pro</title>
+    
+    <link rel="stylesheet" href="style-mandalas.css">
+</head>
+<body>
+
+    <div id="modal-device-selection" class="overlay">
+        <div class="card">
+            <h2 class="modal-title text-gold">BEM-VINDO!</h2>
+            <p class="modal-text center">
+                Para que sua experiência seja perfeita, por onde você está jogando agora?
+            </p>
+            <div class="device-container">
+                <button class="btn-action btn-device pc" onclick="escolherDispositivo('pc')">
+                    <span class="device-icon">💻</span> PC / Notebook
+                </button>
+                <button class="btn-action btn-device mobile" onclick="escolherDispositivo('mobile')">
+                    <span class="device-icon">📱</span> Celular
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-intro-1" class="overlay" style="display: none;">
+        <div class="card">
+            <h2 class="modal-title spaced text-accent">MONOCROMIA</h2>
+            <p class="modal-text">
+                Complete a mandala usando <strong>apenas tons da mesma família</strong>.<br><br>
+                Dica: As cores agora estão agrupadas por família no painel para facilitar a sua escolha!
+            </p>
+            <button class="btn-action padded" onclick="startGame()">COMEÇAR ETAPA 1</button>
+        </div>
+    </div>
+
+    <div id="modal-success-1" class="overlay" style="display: none;">
+        <div class="card card-success">
+            <h2 class="modal-title text-success">PERFEITO!</h2>
+            <p class="modal-text">
+                Sua visão monocromática é impecável. O equilíbrio de tons foi validado.
+            </p>
+            <div class="btn-action-group">
+                <button class="btn-action dark" onclick="resetPhase1()">REFAZER</button>
+                <button class="btn-action gold" onclick="showIntroPhase2()">IR PARA ETAPA 2 ➔</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-intro-2" class="overlay" style="display: none;">
+        <div class="card card-gold">
+            <h2 class="modal-title spaced text-gold">POLICROMIA ULTRA</h2>
+            <p class="modal-text">
+                Bem-vindo ao nível Ultra. A policromia celebra a diversidade e o contraste agressivo.<br><br>
+                O desafio agora é dar vida a esta mandala geométrica utilizando pelo menos <strong>3 famílias de cores diferentes</strong>.
+            </p>
+            <button class="btn-action gold padded" onclick="startPhase2()">LIBERAR MANDALA GEOMÉTRICA</button>
+        </div>
+    </div>
+
+    <div id="modal-victory-final" class="overlay" style="display: none;">
+        <div class="card victory-card">
+            <div class="victory-icon">🏆</div>
+            <h2 class="modal-title huge text-gold">MESTRE DAS CORES</h2>
+            <p class="modal-text large center">
+                Você concluiu o desafio Fusion Ultra com maestria artística absoluta.
+            </p>
+            <button class="btn-action white padded-large" onclick="location.reload()">JOGAR NOVAMENTE</button>
+
+            <button class="btn-action success" onclick="prosseguirParaMapa()">PROSSEGUIR</button>
+        </div>
+    </div>
+
+    <div id="modal-fullscreen-colors" class="overlay fullscreen-modal" style="display: none;">
+        <div class="fullscreen-header">
+            <h2 class="modal-title text-dark">PALETA COMPLETA</h2>
+            <button onclick="closeFullscreenColors()" class="btn-close">×</button>
+        </div>
+        <div class="fullscreen-body">
+            <div class="color-grid-fullscreen" id="grid-cores-fullscreen"></div>
+        </div>
+    </div>
+
+    <div id="phase1" class="game-phase active-phase">
+        <h3 class="phase-title">MANDALA <span class="text-accent">FUSION</span></h3>
+        <div id="game-container">
+            <div id="canvas-mold-1" class="canvas-mold">
+                <div class="zoom-panel">
+                    <button class="zoom-btn" onclick="zoomControl('mandala-svg-1', 'out')">➖</button>
+                    <button class="zoom-btn" onclick="zoomControl('mandala-svg-1', 'reset')">⟲</button>
+                    <button class="zoom-btn" onclick="zoomControl('mandala-svg-1', 'in')">➕</button>
+                </div>
+
+                <svg class="mandala-svg" viewBox="-150 -150 300 300" id="mandala-svg-1">
+                    <g id="m1-outer-layer">
+                        <path class="mandala-part" id="m1-o1" d="M0,-45 C35,-55 45,-110 0,-135 C-45,-110 -35,-55 0,-45 Z" transform="rotate(22.5)"/>
+                        <path class="mandala-part" id="m1-o2" d="M0,-45 C35,-55 45,-110 0,-135 C-45,-110 -35,-55 0,-45 Z" transform="rotate(67.5)"/>
+                        <path class="mandala-part" id="m1-o3" d="M0,-45 C35,-55 45,-110 0,-135 C-45,-110 -35,-55 0,-45 Z" transform="rotate(112.5)"/>
+                        <path class="mandala-part" id="m1-o4" d="M0,-45 C35,-55 45,-110 0,-135 C-45,-110 -35,-55 0,-45 Z" transform="rotate(157.5)"/>
+                        <path class="mandala-part" id="m1-o5" d="M0,-45 C35,-55 45,-110 0,-135 C-45,-110 -35,-55 0,-45 Z" transform="rotate(202.5)"/>
+                        <path class="mandala-part" id="m1-o6" d="M0,-45 C35,-55 45,-110 0,-135 C-45,-110 -35,-55 0,-45 Z" transform="rotate(247.5)"/>
+                        <path class="mandala-part" id="m1-o7" d="M0,-45 C35,-55 45,-110 0,-135 C-45,-110 -35,-55 0,-45 Z" transform="rotate(292.5)"/>
+                        <path class="mandala-part" id="m1-o8" d="M0,-45 C35,-55 45,-110 0,-135 C-45,-110 -35,-55 0,-45 Z" transform="rotate(337.5)"/>
+                    </g>
+                    <g id="m1-middle-layer">
+                        <path class="mandala-part" id="m1-c1" d="M0,-25 C15,-25 25,-55 0,-60 C-25,-55 -15,-25 0,-25 Z" transform="rotate(22.5)"/>
+                        <path class="mandala-part" id="m1-c2" d="M0,-25 C15,-25 25,-55 0,-60 C-25,-55 -15,-25 0,-25 Z" transform="rotate(67.5)"/>
+                        <path class="mandala-part" id="m1-c3" d="M0,-25 C15,-25 25,-55 0,-60 C-25,-55 -15,-25 0,-25 Z" transform="rotate(112.5)"/>
+                        <path class="mandala-part" id="m1-c4" d="M0,-25 C15,-25 25,-55 0,-60 C-25,-55 -15,-25 0,-25 Z" transform="rotate(157.5)"/>
+                        <path class="mandala-part" id="m1-c5" d="M0,-25 C15,-25 25,-55 0,-60 C-25,-55 -15,-25 0,-25 Z" transform="rotate(202.5)"/>
+                        <path class="mandala-part" id="m1-c6" d="M0,-25 C15,-25 25,-55 0,-60 C-25,-55 -15,-25 0,-25 Z" transform="rotate(247.5)"/>
+                        <path class="mandala-part" id="m1-c7" d="M0,-25 C15,-25 25,-55 0,-60 C-25,-55 -15,-25 0,-25 Z" transform="rotate(292.5)"/>
+                        <path class="mandala-part" id="m1-c8" d="M0,-25 C15,-25 25,-55 0,-60 C-25,-55 -15,-25 0,-25 Z" transform="rotate(337.5)"/>
+                    </g>
+                    <g id="m1-inner-layer">
+                        <path class="mandala-part" id="m1-p1" d="M0,-18 C22,-20 25,-60 0,-85 C-25,-60 -22,-20 0,-18 Z" transform="rotate(0)"/>
+                        <path class="mandala-part" id="m1-p2" d="M0,-18 C22,-20 25,-60 0,-85 C-25,-60 -22,-20 0,-18 Z" transform="rotate(45)"/>
+                        <path class="mandala-part" id="m1-p3" d="M0,-18 C22,-20 25,-60 0,-85 C-25,-60 -22,-20 0,-18 Z" transform="rotate(90)"/>
+                        <path class="mandala-part" id="m1-p4" d="M0,-18 C22,-20 25,-60 0,-85 C-25,-60 -22,-20 0,-18 Z" transform="rotate(135)"/>
+                        <path class="mandala-part" id="m1-p5" d="M0,-18 C22,-20 25,-60 0,-85 C-25,-60 -22,-20 0,-18 Z" transform="rotate(180)"/>
+                        <path class="mandala-part" id="m1-p6" d="M0,-18 C22,-20 25,-60 0,-85 C-25,-60 -22,-20 0,-18 Z" transform="rotate(225)"/>
+                        <path class="mandala-part" id="m1-p7" d="M0,-18 C22,-20 25,-60 0,-85 C-25,-60 -22,-20 0,-18 Z" transform="rotate(270)"/>
+                        <path class="mandala-part" id="m1-p8" d="M0,-18 C22,-20 25,-60 0,-85 C-25,-60 -22,-20 0,-18 Z" transform="rotate(315)"/>
+                    </g>
+                    <circle class="mandala-part" id="m1-center" cx="0" cy="0" r="18"/>
+                </svg>
+            </div>
+            <div id="color-panel">
+                <div id="msg-box">Selecione uma parte da mandala. Escolha tons de UMA MESMA família de cores.</div>
+                <div class="color-grid" id="grid-cores-1"></div>
+                <button id="btn-send-1" onclick="validateMandala1()" class="btn-action" disabled>VERIFICAR MONOCROMIA</button>
+                <button onclick="resetPhase1()" class="btn-action btn-reset">REINICIAR TUDO</button>
+                
+                <div class="divider"></div>
+                <button onclick="openFullscreenColors(1)" class="btn-fullscreen">
+                    <span class="icon-fullscreen">⛶</span>
+                    TELA CHEIA
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="phase2" class="game-phase">
+        <button class="btn-nav-back" onclick="backToPhase1()">← VOLTAR PARA ETAPA 1</button>
+        <h3 class="phase-title">ETAPA 2: <span class="text-gold">MANDALA ULTRA</span></h3>
+        <div id="game-container">
+            <div id="canvas-mold-2" class="canvas-mold">
+                <div class="zoom-panel">
+                    <button class="zoom-btn" onclick="zoomControl('mandala-svg-2', 'out')">➖</button>
+                    <button class="zoom-btn" onclick="zoomControl('mandala-svg-2', 'reset')">⟲</button>
+                    <button class="zoom-btn" onclick="zoomControl('mandala-svg-2', 'in')">➕</button>
+                </div>
+
+                <svg class="mandala-svg" viewBox="-150 -150 300 300" id="mandala-svg-2">
+                    <g id="m2-outer-layer">
+                        <path class="mandala-part-2" id="m2-o1" d="M0,-60 L20,-90 L0,-140 L-20,-90 Z" transform="rotate(0)"/>
+                        <path class="mandala-part-2" id="m2-o2" d="M0,-60 L20,-90 L0,-140 L-20,-90 Z" transform="rotate(45)"/>
+                        <path class="mandala-part-2" id="m2-o3" d="M0,-60 L20,-90 L0,-140 L-20,-90 Z" transform="rotate(90)"/>
+                        <path class="mandala-part-2" id="m2-o4" d="M0,-60 L20,-90 L0,-140 L-20,-90 Z" transform="rotate(135)"/>
+                        <path class="mandala-part-2" id="m2-o5" d="M0,-60 L20,-90 L0,-140 L-20,-90 Z" transform="rotate(180)"/>
+                        <path class="mandala-part-2" id="m2-o6" d="M0,-60 L20,-90 L0,-140 L-20,-90 Z" transform="rotate(225)"/>
+                        <path class="mandala-part-2" id="m2-o7" d="M0,-60 L20,-90 L0,-140 L-20,-90 Z" transform="rotate(270)"/>
+                        <path class="mandala-part-2" id="m2-o8" d="M0,-60 L20,-90 L0,-140 L-20,-90 Z" transform="rotate(315)"/>
+                    </g>
+                    <g id="m2-middle-layer">
+                        <polygon class="mandala-part-2" id="m2-m1" points="0,-40 12,-65 0,-90 -12,-65" transform="rotate(22.5)"/>
+                        <polygon class="mandala-part-2" id="m2-m2" points="0,-40 12,-65 0,-90 -12,-65" transform="rotate(67.5)"/>
+                        <polygon class="mandala-part-2" id="m2-m3" points="0,-40 12,-65 0,-90 -12,-65" transform="rotate(112.5)"/>
+                        <polygon class="mandala-part-2" id="m2-m4" points="0,-40 12,-65 0,-90 -12,-65" transform="rotate(157.5)"/>
+                        <polygon class="mandala-part-2" id="m2-m5" points="0,-40 12,-65 0,-90 -12,-65" transform="rotate(202.5)"/>
+                        <polygon class="mandala-part-2" id="m2-m6" points="0,-40 12,-65 0,-90 -12,-65" transform="rotate(247.5)"/>
+                        <polygon class="mandala-part-2" id="m2-m7" points="0,-40 12,-65 0,-90 -12,-65" transform="rotate(292.5)"/>
+                        <polygon class="mandala-part-2" id="m2-m8" points="0,-40 12,-65 0,-90 -12,-65" transform="rotate(337.5)"/>
+                    </g>
+                    <g id="m2-inner-layer">
+                        <polygon class="mandala-part-2" id="m2-i1" points="0,-12 15,-35 0,-60 -15,-35" transform="rotate(0)"/>
+                        <polygon class="mandala-part-2" id="m2-i2" points="0,-12 15,-35 0,-60 -15,-35" transform="rotate(45)"/>
+                        <polygon class="mandala-part-2" id="m2-i3" points="0,-12 15,-35 0,-60 -15,-35" transform="rotate(90)"/>
+                        <polygon class="mandala-part-2" id="m2-i4" points="0,-12 15,-35 0,-60 -15,-35" transform="rotate(135)"/>
+                        <polygon class="mandala-part-2" id="m2-i5" points="0,-12 15,-35 0,-60 -15,-35" transform="rotate(180)"/>
+                        <polygon class="mandala-part-2" id="m2-i6" points="0,-12 15,-35 0,-60 -15,-35" transform="rotate(225)"/>
+                        <polygon class="mandala-part-2" id="m2-i7" points="0,-12 15,-35 0,-60 -15,-35" transform="rotate(270)"/>
+                        <polygon class="mandala-part-2" id="m2-i8" points="0,-12 15,-35 0,-60 -15,-35" transform="rotate(315)"/>
+                    </g>
+                    <circle class="mandala-part-2" id="m2-center" cx="0" cy="0" r="14"/>
+                </svg>
+            </div>
+            <div id="color-panel">
+                <div id="msg-box-2">Desafio Final: Use pelo menos 3 famílias de cores!</div>
+                <div class="color-grid" id="grid-cores-2"></div>
+                <button id="btn-send-2" onclick="validateMandala2()" class="btn-action" disabled>FINALIZAR OBRA PRIMA</button>
+                <button onclick="resetPhase2()" class="btn-action btn-reset">LIMPAR ETAPA 2</button>
+                
+                <div class="divider"></div>
+                <button onclick="openFullscreenColors(2)" class="btn-fullscreen">
+                    <span class="icon-fullscreen">⛶</span>
+                    TELA CHEIA
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script-mandalas.js"></script>
+</body>
+</html>

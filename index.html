@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Color Fusion Pro</title>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="main-menu" class="full-screen-overlay">
+        <div style="font-size: 80px;">🌈</div>
+        <h1 style="color:white">Color Fusion Pro</h1>
+        <button class="btn-play" onclick="showMap()">JOGAR</button>
+    </div>
+
+  <div id="map-screen" class="full-screen-overlay" style="display: none;">
+      <div style="width: 90%; max-width: 400px;">
+                <h2 style="text-align: center; color: white;">Mapa de Cores</h2>
+    
+          <div class="career-path">
+              <div id="node-1" class="phase-node active" onclick="selectPhase(1)">1</div>
+              <div class="path-line"></div>
+              <div id="node-2" class="phase-node locked" onclick="selectPhase(2)">2</div>
+              <div class="path-line"></div>
+              <div id="node-3" class="phase-node locked" onclick="selectPhase(3)">3</div>
+              <div class="path-line"></div>
+              <div id="node-4" class="phase-node locked" onclick="selectPhase(4)">4</div>
+          </div>
+    
+                  <div style="background: #ffffff; padding: 20px; border-radius: 20px; text-align: center; color: #1a252f;">
+                    <h3 id="selected-phase-name">Fase 1: Primárias</h3>
+                    <button id="btn-start-phase" onclick="startGame()">Começar</button>
+                  </div>
+      </div>
+  </div>
+
+
+    <div id="game-screen" style="display: none;">
+        <div id="phase-intro" class="phase-overlay" style="display:none;">
+            <div class="phase-card">
+                <h1 id="phase-title">Fase 1</h1>
+                <p id="phase-desc">Misture as cores para evoluir!</p>
+                <button onclick="closeIntro()">Vamos lá!</button>
+            </div>
+        </div>
+
+        <div class="game-container" id="game-container">
+            <div class="header">
+                <span class="emoji">🌈</span>
+                <h1>Color Fusion Pro</h1>
+            </div>
+            <p id="game-instruction" style="font-size: 0.8rem; color: #7f8c8d;">Misture as cores para completar o círculo!</p>
+            <div id="color-area"></div>
+            <div class="wheel-container">
+                <div id="chromatic-wheel" class="wheel-base"></div>
+                <div class="wheel-center"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="error-overlay" style="display: none;">
+        <div class="error-card">
+            <h2>Ops!</h2>
+            <p id="error-text">Tente outra combinação!</p>
+            <button style="background: #e74c3c;" onclick="closeError()">Tentar Novamente</button>
+        </div>
+    </div>
+
+    <div id="result-overlay" style="display: none;">
+        <div class="result-card">
+            <div id="final-color-display" style="width: 60px; height: 60px; margin: 0 auto 10px; border-radius: 50%;"></div>
+            <h2 id="final-color-name">Cor</h2>
+            <p id="color-psychology" style="font-size: 0.9rem;"></p>
+            <button id="btn-continue" onclick="resetAfterMix()">Continuar</button>
+        </div>
+    </div>
+
+    <div id="victory-overlay" class="phase-overlay" style="display: none;">
+        <div class="victory-card">
+            <h1>Magnífico!</h1>
+            <p>O círculo está completo!</p>
+            <img id="img-circulo-vitoria" 
+                 src="https://i.postimg.cc/rwmFV97B/circulo-cromatico-(1).png" 
+                 alt="Círculo Cromático">
+            <button onclick="finishPhase()">Voltar ao Mapa</button>
+        </div>
+    </div>
+
+    <div id="loading-overlay" class="full-screen-overlay" style="display: none; flex-direction: column; z-index: 9999; background: #455564; align-items: center; justify-content: center; position: fixed; inset: 0;">
+        <div class="loader"></div>
+        <h2 style="color: white; margin-top: 25px; font-family: 'Inter', sans-serif;">Carregando Fase 3...</h2>
+        <p style="color: #cbd5e1; font-size: 0.95rem; font-family: 'Inter', sans-serif;">Preparando o estúdio de Mandalas</p>
+    </div>
+
+    <script src="script.js"></script>
+
+      
+</body>
+</html>

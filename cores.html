@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Color Fusion Pro</title>
+    
+    <link rel="stylesheet" href="style-cores.css">
+</head>
+<body>
+  <div id="app">
+    <div id="card-intro" class="card-modal">
+      <h2 style="color:var(--gold); margin-bottom: 10px;">Cores Termais</h2>
+      <p style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 20px;">
+        Bem-vindo ao aprendizado de cores quentes e frias. Antes de começar, calibre sua percepção térmica:
+      </p>
+      
+      <div class="dida-container">
+        <div class="dida-item">
+          <span style="font-size: 1.2rem;">🔥</span> 
+          <strong>Cromática Quente:</strong> 
+          <p style="margin: 5px 0 0 28px; font-size: 0.85rem; line-height: 1.4;">
+            São cores que transmitem energia, calor e proximidade. Dominadas pelo <strong>Vermelho, Laranja e Amarelo</strong>, elas estimulam o olhar e criam sensações vibrantes.
+          </p>
+        </div>
+        
+        <div style="height: 1px; background: var(--border); margin: 15px 0; opacity: 0.5;"></div>
+
+        <div class="dida-item">
+          <span style="font-size: 1.2rem;">❄️</span> 
+          <strong>Cromática Fria:</strong> 
+          <p style="margin: 5px 0 0 28px; font-size: 0.85rem; line-height: 1.4;">
+            Cores que evocam calma, profundidade e frescor. Compostas por nuances de <strong>Azul, Verde e Violeta</strong>, elas tendem a parecer mais distantes e relaxantes ao olhar.
+          </p>
+        </div>
+      </div>
+      
+      <button class="btn btn-gold" onclick="iniciarJogo()">COMEÇAR TREINAMENTO</button>
+    </div>
+
+    <div id="game-container" style="display:none;">
+      <div id="header-missao">
+        <h3 id="titulo-etapa"></h3>
+        <p id="instrucao"></p>
+      </div>
+      <div id="grid-captcha"></div>
+      <div id="footer-acoes" style="display: none !important;"> 
+        <button id="btn-verificar" class="btn btn-gold" onclick="verificarSelecao()">VERIFICAR</button>
+      </div>
+      <div id="feedback"></div>
+    </div>
+
+    <div id="card-sucesso" class="card-modal" style="display:none;">
+      <h2 style="color:#28a745;">✅ Certificação Concluída!</h2>
+      <p>Seu olhar está perfeitamente calibrado para curadoria.</p>
+      <button class="btn btn-gold" onclick="reiniciarTudo()">REINICIAR CURADORIA</button>
+      <button class="btn btn-gold" onclick="voltarAoMapaFinal()">Sucesso</button>
+    </div>
+  </div>
+  <script src="script-cores.js"></script>
+</body>
+</html>
