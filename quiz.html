@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Color Fusion Pro - Avaliação Final</title>
+    
+    <link rel="stylesheet" href="style-quiz.css">
+</head>
+<body>
+    <div id="app">
+        <div id="tela-intro" class="card-modal">
+            <h2 style="color:var(--text-main); margin-bottom: 5px;">Color Fusion Pro</h2>
+            <h3 style="color:var(--gold); margin-top: 0;">O Exame Final</h3>
+            <p style="color: var(--text-light); margin-bottom: 25px; line-height: 1.5;">
+                Você calibrou seu olhar e dominou o círculo cromático. Agora, prove seu conhecimento nesta avaliação completa de 14 questões sobre a Teoria das Cores.
+            </p>
+            <button class="btn btn-gold" onclick="iniciarQuiz()">INICIAR AVALIAÇÃO</button>
+        </div>
+
+        <div id="tela-quiz" class="card-modal" style="display:none;">
+            <div id="quiz-header">
+                <span id="badge-tema" class="badge">Tema</span>
+                <span id="contador-questao">1/14</span>
+            </div>
+            <h3 id="texto-pergunta" style="margin: 20px 0; color: var(--text-main);"></h3>
+            <div id="opcoes-container"></div>
+        </div>
+
+        <div id="tela-feedback" class="card-modal" style="display:none;">
+            <h2 id="feedback-titulo" style="color:var(--text-main);">Análise do Tema</h2>
+            <div class="dida-container">
+                <p id="feedback-texto" style="margin: 0; font-weight: 500; text-align: center; font-size: 1.1rem;"></p>
+            </div>
+            <button class="btn btn-gold" onclick="proximaPergunta()">VER RELATÓRIO</button>
+        </div>
+
+        <div id="tela-resultado" class="card-modal" style="display:none;">
+            <h2 style="color:var(--text-main); margin-bottom: 5px;">Relatório de Desempenho</h2>
+            <h1 id="nota-total" style="color:var(--gold); margin: 10px 0;">0/14</h1>
+            <div id="pente-fino-container" style="text-align: left; margin: 20px 0;"></div>
+            <button class="btn btn-gold" onclick="mostrarCreditos()" style="width: 100%;">VER CRÉDITOS</button>
+        </div>
+
+        <div id="tela-creditos" class="card-modal" style="display:none; overflow: hidden;">
+    <h2 style="color:var(--text-main); margin-bottom: 10px;">Color Fusion Pro</h2>
+    
+    <div class="creditos-viewport">
+        <div class="creditos-scroll">
+            
+            <div class="credito-secao">
+                <p class="label-credito">PRODUZIDO POR</p>
+                <div class="imagem-produtora">
+                    <img src="SUA_LOGO_AQUI.png" alt="Logo" onerror="this.style.opacity='0'">
+                    <span class="placeholder-img">SUA LOGO</span>
+                </div>
+            </div>
+
+            <div class="credito-secao">
+                <p class="label-credito">DESENVOLVIDO POR</p>
+                <p class="nome-credito">[Seu Nome Aqui]</p>
+            </div>
+
+            <div class="credito-secao">
+                <p class="label-credito">EQUIPE DE APOIO</p>
+                <p class="nome-credito">Curadoria Técnica</p>
+                <p class="nome-credito">Design de Interface</p>
+                <p class="nome-credito">Testes de Usabilidade</p>
+            </div>
+
+            <div class="credito-secao">
+                <p class="label-credito">AGRADECIMENTOS</p>
+                <p class="nome-credito">Comunidade Color Fusion</p>
+                <p class="nome-credito">Teoria das Cores Clássica</p>
+            </div>
+
+            <div class="credito-secao">
+                <p class="label-credito">VERSÃO 1.0</p>
+                <p class="nome-credito">© 2024 - Todos os direitos reservados</p>
+            </div>
+
+        </div>
+    </div>
+    
+    <button class="btn btn-outline" onclick="window.location.href='index.html'" style="margin-top: 15px; width: 100%;">VOLTAR AO MENU</button>
+</div>
+
+    </div>
+
+    <script src="script-quiz.js"></script>
+</body>
+</html>

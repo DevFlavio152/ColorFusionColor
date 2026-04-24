@@ -259,7 +259,7 @@ function resetAfterMix() {
             setTimeout(() => {
                 const vic = document.getElementById('victory-overlay');
                 if(vic) vic.style.display = 'flex';
-            }, 3000);
+            }, 2000);
         }
     }
 }

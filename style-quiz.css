@@ -1,0 +1,216 @@
+:root {
+  --gold: #d4af37;
+  --bg: #f0f4f8;
+  --card: #ffffff;
+  --border: #d1d9e6;
+  --text-main: #2c3e50;
+  --text-light: #5a6a7a;
+  --success: #28a745;
+  --error: #e74c3c;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-main);
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+#app { width: 95%; max-width: 600px; }
+
+.card-modal {
+  background: var(--card);
+  padding: 40px 30px;
+  border-radius: 30px;
+  border: 1px solid var(--border);
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dida-container {
+  margin: 20px 0;
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 15px;
+  border-left: 5px solid var(--gold);
+  color: var(--text-light);
+}
+
+/* Botões Principais */
+.btn {
+  padding: 16px 30px;
+  border: none;
+  border-radius: 50px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.85rem;
+}
+
+.btn-gold {
+  background: var(--gold);
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+}
+
+.btn-gold:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5); }
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--border);
+  color: var(--text-light);
+}
+.btn-outline:hover { background: var(--bg); color: var(--text-main); }
+
+/* Elementos do Quiz */
+#quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  font-weight: bold;
+  color: var(--text-light);
+}
+
+.badge {
+  background: var(--bg);
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  color: var(--gold);
+  border: 1px solid var(--border);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Opções de Resposta (Botões Bubble) */
+.opcao-btn {
+  display: block;
+  width: 100%;
+  background: #f8fafc;
+  border: 2px solid var(--border);
+  color: var(--text-main);
+  padding: 18px 20px;
+  margin-bottom: 12px;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.opcao-btn:hover {
+  border-color: var(--gold);
+  background: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+}
+
+/* Tabela do Pente Fino */
+.linha-resultado {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 500;
+}
+.linha-resultado:last-child { border-bottom: none; }
+.pontuacao-badge { font-weight: 800; }
+.p-boa { color: var(--success); }
+.p-media { color: var(--gold); }
+.p-ruim { color: var(--error); }
+
+/* --- SISTEMA DE CRÉDITOS ANIMADOS --- */
+
+.creditos-viewport {
+    height: 280px; /* Altura da janela de visualização */
+    overflow: hidden;
+    position: relative;
+    background: #f8fafc;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    margin: 10px 0;
+}
+
+.creditos-scroll {
+    position: absolute;
+    width: 100%;
+    /* A animação 'subirCreditos' dura 15 segundos e repete para sempre */
+    animation: subirCreditos 15s linear infinite;
+    padding-top: 20px;
+}
+
+@keyframes subirCreditos {
+    0% {
+        transform: translateY(280px); /* Começa lá embaixo, fora da vista */
+    }
+    100% {
+        transform: translateY(-100%); /* Sobe até o final do conteúdo sumir lá em cima */
+    }
+}
+
+.credito-secao {
+    margin-bottom: 50px; /* Espaço entre cada bloco de informação */
+    text-align: center;
+}
+
+.label-credito {
+    font-size: 0.65rem; /* Letras bem menores como você pediu */
+    color: var(--gold);
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.nome-credito {
+    font-size: 0.85rem; /* Nome um pouco maior que a label, mas ainda pequeno */
+    color: var(--text-main);
+    font-weight: 600;
+    margin: 4px 0;
+}
+
+.imagem-produtora {
+    width: 70px;
+    height: 70px;
+    margin: 10px auto;
+    background: #e2e8f0;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border: 1px dashed #cbd5e1;
+}
+
+.imagem-produtora img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    position: absolute;
+    z-index: 2;
+}
+
+.placeholder-img {
+    font-size: 0.5rem;
+    color: #94a3b8;
+    z-index: 1;
+}
+
+/* Pausa a animação se o usuário passar o mouse (opcional, mas legal para ler) */
+.creditos-viewport:hover .creditos-scroll {
+    animation-play-state: paused;
+}

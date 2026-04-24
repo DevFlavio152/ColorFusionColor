@@ -109,6 +109,6 @@ function reiniciarTudo() {
 }
 
 function voltarAoMapaFinal() {
-    // Viaja de volta para o Jogo Principal
-    window.location.href = "index.html";
+    // Em vez de voltar ao menu, agora o jogador vai para a Grande Final: O QUIZ!
+    window.location.href = "quiz.html";
 }
