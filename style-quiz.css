@@ -165,6 +165,7 @@ body {
 .credito-secao {
     margin-bottom: 50px; /* Espaço entre cada bloco de informação */
     text-align: center;
+    
 }
 
 .label-credito {
@@ -186,10 +187,10 @@ body {
 .imagem-produtora {
     width: 70px;
     height: 70px;
-    margin: 10px auto;
+    margin: 10px 10px; /* Mudei aqui para dar um espacinho entre elas */
     background: #e2e8f0;
     border-radius: 12px;
-    display: flex;
+    display: inline-flex; /* O segredo está aqui: mudou de 'flex' para 'inline-flex' */
     align-items: center;
     justify-content: center;
     position: relative;

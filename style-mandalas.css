@@ -7,7 +7,7 @@
         --text-dark: #2c3e50;   
         --text-light: #ffffff;  
         
-        --accent: #3498db; 
+        --accent: #00F7FF; 
         --gold: #f1c40f; 
         --danger: #ff4757; 
         --success: #2ecc71;
@@ -473,7 +473,7 @@
 .phase-title {
     margin: 10px 0;
     letter-spacing: 8px;
-    color: #333;
+    color: #ffffff;
     font-size: 1.5rem;
 }
 .icon-fullscreen {
@@ -540,3 +540,8 @@
     /* Esconde o botão de tela cheia no mobile, já que o carrossel resolve */
     .btn-fullscreen { display: none; }
 }
+.fasetitle {
+    color: yellow;
+}
+
+

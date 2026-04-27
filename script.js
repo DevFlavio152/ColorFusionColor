@@ -254,8 +254,12 @@ function resetAfterMix() {
     
     if (phaseCompleted) {
         if (currentPhase === 1) {
-            finishPhase();
+            // FASE 1: Espera 2 segundos mostrando o círculo incompleto e vai direto pro Mapa!
+            setTimeout(() => {
+                finishPhase();
+            }, 2000);
         } else {
+            // FASE 2 e 3: Espera 2 segundos mostrando o jogo e DEPOIS mostra o card de Vitória!
             setTimeout(() => {
                 const vic = document.getElementById('victory-overlay');
                 if(vic) vic.style.display = 'flex';

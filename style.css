@@ -63,7 +63,19 @@ body {
         background: transparent;
     }
 
-    .btn-play { background: #27ae60; color: white; padding: 15px 40px; font-size: 20px; border-radius: 50px; border: none; font-weight: bold; box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3); }
+    .btn-play { 
+    background: #27ae60; 
+    color: white; 
+    padding: 15px 40px; 
+    font-size: 20px; 
+    border-radius: 50px; 
+    border: none; 
+    font-weight: bold; 
+    box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3); 
+    width: auto; /* Corrige o esticamento no PC */
+    min-width: 300px; /* Mantém um tamanho mínimo elegante */
+    cursor: pointer;
+}
     button { background: #2c3e50; color: white; border: none; padding: 12px; border-radius: 12px; font-weight: bold; width: 100%; margin-top: 10px; cursor: pointer; }
 
     .career-path { display: flex; align-items: center; justify-content: space-between; margin: 20px 0; width: 100%; }

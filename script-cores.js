@@ -62,10 +62,10 @@ function renderizarGrid() {
     const instrucao = document.getElementById('instrucao');
     
     if (etapaAtual === 1) {
-        titulo.innerText = 'Etapa 1: Radar Quente';
+        titulo.innerText = 'Etapa 1: Área Quente';
         instrucao.innerHTML = 'Selecione todas as <strong>Cores Quentes</strong>.';
     } else {
-        titulo.innerText = 'Etapa 2: Zona Fria';
+        titulo.innerText = 'Etapa 2: Área Fria';
         instrucao.innerHTML = 'Selecione todas as <strong>Cores Frias</strong>.';
     }
     
