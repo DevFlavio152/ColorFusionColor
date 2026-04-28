@@ -508,11 +508,12 @@
 
     /* A MANDALA: Agora ela ocupa o espaço que sobrar, sem ser esmagada */
     .canvas-mold {
-        flex: 1 1 45%; /* Ocupa pelo menos 45% da tela, mas cresce se puder */
-        width: 100% !important;
-        min-height: 0; /* CRÍTICO para o iOS não bugar o flex */
-        border-radius: 15px;
-        position: relative;
+        flex: 1 1 50% !important; /* Dá 50% da tela para a mandala */
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        overflow: hidden !important;
+        min-height: 250px !important; /* Impede que o Safari esmague o desenho */
     }
 
     /* O PAINEL DE CORES: Definimos um tamanho fixo ou flexível para ele não sumir */
@@ -561,6 +562,17 @@
         font-size: 1rem !important;
         flex-shrink: 0; /* Impede o botão de sumir */
     }
+
+    /* Ajuste REAL no SVG para iPhone */
+    .mandala-svg {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: 90vw !important; /* Não deixa passar da largura da tela */
+        max-height: 45vh !important; /* Não deixa passar da metade da altura */
+        object-fit: contain !important; /* Mantém a proporção sem distorcer */
+        display: block !important;
+    }
+
 }
 
 

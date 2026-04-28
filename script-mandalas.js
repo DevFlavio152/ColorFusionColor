@@ -8,6 +8,13 @@ function ajustarAlturaMobile() {
 window.addEventListener('load', () => {
     setTimeout(ajustarAlturaMobile, 300);
 });
+
+// Forçar o redesenho dos SVGs para o Safari
+    document.querySelectorAll('svg').forEach(svg => {
+        svg.style.display = 'none';
+        svg.offsetHeight; // Truque para forçar o navegador a recalcular
+        svg.style.display = 'block';
+    });
 // Executa na inicialização e sempre que a tela girar/mudar
 ajustarAlturaMobile();
 window.addEventListener('resize', ajustarAlturaMobile);
