@@ -487,61 +487,80 @@
 }
 
 /* --- RESPONSIVIDADE AUTOMÁTICA PARA TELAS DE CELULAR --- */
+/* --- AJUSTE DEFINITIVO PARA MOBILE (ANDROID E IOS) --- */
 @media (max-width: 768px) {
-    /* 1. Ajuste dos Cards para ocuparem a tela toda sem sumir */
-    .card {
-        width: 95%;
-        padding: 30px 20px;
-        box-sizing: border-box;
-    }
-
-    /* 2. Textos Maiores e Legíveis */
-    .modal-title { font-size: 1.8rem; }
-    .modal-title.huge { font-size: 2.2rem; }
-    .modal-text { font-size: 1.1rem; }
-    .modal-text.large { font-size: 1.2rem; }
-
-    /* 3. Botões mais fáceis de tocar */
-    .btn-action {
-        width: 100%; /* Faz o botão ocupar a largura do card */
-        font-size: 1.1rem;
-        padding: 15px 20px;
-        box-sizing: border-box;
-    }
-    
-    .btn-action-group {
-        flex-direction: column; /* Coloca um botão embaixo do outro */
+    body {
+        /* Garante que o corpo não role, o scroll será interno */
+        overflow: hidden; 
+        position: fixed;
         width: 100%;
     }
 
-    /* 4. Força o Layout Mobile do Jogo (Carrossel) automaticamente */
     #game-container {
-        flex-direction: column;
-        height: 100%;
-        width: 100%;
+        flex-direction: column !important;
+        height: 100vh !important; /* Força a altura total */
+        height: calc(var(--vh, 1vh) * 100) !important;
         padding: 10px;
+        gap: 10px;
         box-sizing: border-box;
+        display: flex !important;
     }
 
+    /* A MANDALA: Agora ela ocupa o espaço que sobrar, sem ser esmagada */
     .canvas-mold {
-        height: 60%;
-        width: 100%;
+        flex: 1 1 45%; /* Ocupa pelo menos 45% da tela, mas cresce se puder */
+        width: 100% !important;
+        min-height: 0; /* CRÍTICO para o iOS não bugar o flex */
         border-radius: 15px;
+        position: relative;
     }
 
+    /* O PAINEL DE CORES: Definimos um tamanho fixo ou flexível para ele não sumir */
     #color-panel {
-        width: 100%;
-        height: 40%;
-        margin-top: 10px;
-        padding: 15px;
+        flex: 0 0 45%; /* Não deixa o painel diminuir menos que 45% da tela */
+        width: 100% !important;
+        margin-top: 0;
+        padding: 12px;
         box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background: var(--panel-bg);
+        border-radius: 15px;
+        min-height: 0; /* Ajuda no scroll interno */
     }
 
-    /* Esconde o botão de tela cheia no mobile, já que o carrossel resolve */
-    .btn-fullscreen { display: none; }
-}
-.fasetitle {
-    color: yellow;
+    /* Carrossel de Cores no iOS */
+    .color-grid {
+        display: flex !important;
+        flex-direction: row !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch; /* Suaviza o scroll no iPhone */
+        gap: 12px;
+        padding: 10px 5px;
+        min-height: 70px; /* Garante que as bolinhas apareçam */
+        flex-shrink: 0;
+    }
+
+    .color-btn {
+        flex: 0 0 55px !important; /* Mantém o tamanho circular fixo */
+        height: 55px !important;
+        width: 55px !important;
+    }
+
+    #msg-box, #msg-box-2 {
+        min-height: 50px;
+        font-size: 0.85rem;
+        margin-bottom: 5px;
+        flex-shrink: 0;
+    }
+
+    .btn-action {
+        padding: 15px !important;
+        font-size: 1rem !important;
+        flex-shrink: 0; /* Impede o botão de sumir */
+    }
 }
 
 

@@ -3,6 +3,11 @@ function ajustarAlturaMobile() {
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
 }
+
+// Adicione isso para garantir que o iOS recalcule após o carregamento completo
+window.addEventListener('load', () => {
+    setTimeout(ajustarAlturaMobile, 300);
+});
 // Executa na inicialização e sempre que a tela girar/mudar
 ajustarAlturaMobile();
 window.addEventListener('resize', ajustarAlturaMobile);
