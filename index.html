@@ -8,11 +8,19 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="main-menu" class="full-screen-overlay">
-        <div style="font-size: 80px;">🌈</div>
-        <h1 style="color:white">Enigma das Cores</h1>
-        <button class="btn-play" onclick="showMap()">JOGAR</button>
+    <div id="main-menu" class="capa-container">
+    <div class="capa-content">
+        <div class="capa-texto">
+            <h1>O Enigma<br><span style="color: #2c3e50;">das Cores</span></h1>
+            <p>Um panorama das cores</p>
+            <button class="btn-play" onclick="showMap()">Jogar</button>
+        </div>
+        
+        <div class="capa-visual">
+            <img src="assets/imagemcapaB.png" class="capa-personagem" alt="Personagem Enigma das Cores">
+        </div>
     </div>
+</div>
 
   <div id="map-screen" class="full-screen-overlay" style="display: none;">
       <div style="width: 90%; max-width: 400px;">
