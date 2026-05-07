@@ -23,9 +23,9 @@
 </div>
 
   <div id="map-screen" class="full-screen-overlay" style="display: none;">
-      <div style="width: 90%; max-width: 400px;">
-                <h2 style="text-align: center; color: white;">Mapa de Cores</h2>
-    
+      <div class="map-card-premium">
+          <h2 class="map-title">Mapa de Cores</h2>
+          
           <div class="career-path">
               <div id="node-1" class="phase-node active" onclick="selectPhase(1)">1</div>
               <div class="path-line"></div>
@@ -35,21 +35,25 @@
               <div class="path-line"></div>
               <div id="node-4" class="phase-node locked" onclick="selectPhase(4)">4</div>
           </div>
-    
-                  <div style="background: #ffffff; padding: 20px; border-radius: 20px; text-align: center; color: #1a252f;">
-                    <h3 id="selected-phase-name">Fase 1: Primárias</h3>
-                    <button id="btn-start-phase" onclick="startGame()">Começar</button>
-                  </div>
+          
+          <div class="phase-info-card">
+              <h3 id="selected-phase-name">Fase 1: Primárias</h3>
+              <button id="btn-start-phase" onclick="startGame()">Começar</button>
+          </div>
       </div>
   </div>
 
 
     <div id="game-screen" style="display: none;">
         <div id="phase-intro" class="phase-overlay" style="display:none;">
-            <div class="phase-card">
-                <h1 id="phase-title">Fase 1</h1>
-                <p id="phase-desc">Misture as cores para evoluir!</p>
-                <button onclick="closeIntro()">Vamos lá!</button>
+            <div class="dialogue-container">
+                <img id="dialogue-img" src="assets/personagem.png" alt="Mestre das Cores" class="dialogue-character">
+                
+                <div class="dialogue-box">
+                    <h3 id="dialogue-title" class="dialogue-name">Mestre das Cores</h3>
+                    <p id="dialogue-text" class="dialogue-content"></p>
+                    <button class="btn-dialogue-next" onclick="closeIntro()">Começar!</button>
+                </div>
             </div>
         </div>
 

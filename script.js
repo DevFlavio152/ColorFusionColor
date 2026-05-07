@@ -93,19 +93,19 @@ function startGame() {
 function initPhase(phase) {
     currentPhase = phase;
     
-    // CRÍTICO: Limpa os dados de vitórias anteriores para não bugar a progressão
+    // CRÍTICO: Limpa os dados de vitórias anteriores
     mixedInPhase.clear();
     phaseCompleted = false;
 
     const area = document.getElementById('color-area');
     if (area) area.innerHTML = '';
     
-    // CRÍTICO: Limpa a roda cromática caso o jogador esteja reiniciando a fase
+    // CRÍTICO: Limpa a roda cromática
     const wheel = document.getElementById('chromatic-wheel');
     if (wheel) wheel.innerHTML = '';
     
     if (phase === 1) {
-        showIntro("Fase 1", "Misture as cores para evoluir!");
+        showIntro(1); // Chama a introdução premium da Fase 1
         const tri = document.createElement('div'); tri.className = "phase1-triangle";
         area.appendChild(tri);
         const colors = [{id:'azul', hex:'#2e86de', lab:'AZUL'},{id:'vermelho', hex:'#ff4757', lab:'VERMELHO'},{id:'amarelo', hex:'#ffff00', lab:'AMARELO'}];
@@ -114,7 +114,7 @@ function initPhase(phase) {
             addSlice(c.lab.charAt(0)+c.lab.slice(1).toLowerCase(), c.hex);
         });
     } else if (phase === 2) {
-        showIntro("Fase 2", "Crie as cores secundárias!");
+        showIntro(2); // Chama a introdução premium da Fase 2
         const cols = document.createElement('div'); cols.className = "phase2-columns";
         area.appendChild(cols);
         const colors = [{id:'azul', hex:'#2e86de', lab:'AZUL'},{id:'vermelho', hex:'#ff4757', lab:'VERMELHO'},{id:'amarelo', hex:'#ffff00', lab:'AMARELO'},{id:'roxo', hex:'#8e44ad', lab:'ROXO'},{id:'verde', hex:'#27ae60', lab:'VERDE'},{id:'laranja', hex:'#e67e22', lab:'LARANJA'}];
@@ -123,8 +123,7 @@ function initPhase(phase) {
             addSlice(c.id.charAt(0).toUpperCase()+c.id.slice(1), c.hex); 
         });
     } else if (phase === 3) {
-        // Fallback apenas de segurança (geralmente ignorado pelo redirecionamento no startGame)
-        showIntro("Fase 3", "Nível Mestre: Complete o círculo cromático de 12 cores!");
+        showIntro(3);
         const cols = document.createElement('div'); cols.className = "phase2-columns"; 
         area.appendChild(cols);
         const colors = [
@@ -147,20 +146,18 @@ function createBall(id, color, label, parent) {
 }
 
 function handleDown(e) {
-    // Evita arrastar duplicatas caso o jogador clique muito rápido com múltiplos dedos
     if (draggedClone) return;
 
     originalEl = e.target;
     
     try {
         originalEl.setPointerCapture(e.pointerId);
-    } catch(err) {} // Previne crashes caso o ID do pointer se perca rápido demais
+    } catch(err) {} 
 
     const r = originalEl.getBoundingClientRect();
     draggedClone = originalEl.cloneNode(true);
     offsetX = e.clientX - r.left; offsetY = e.clientY - r.top;
     
-    // Z-index extremo e margem limpa para garantir que fique por cima de tudo
     Object.assign(draggedClone.style, { 
         position:'fixed', left:r.left+'px', top:r.top+'px', 
         width:r.width+'px', height:r.height+'px', 
@@ -180,8 +177,6 @@ function handleDown(e) {
         try { originalEl.releasePointerCapture(ev.pointerId); } catch(err){}
 
         const targetElement = document.elementFromPoint(ev.clientX, ev.clientY);
-        
-        // Usa '.closest' para garantir que pegamos a bolinha inteira e não a tag do texto
         const targetBall = targetElement ? targetElement.closest('.color-ball') : null;
 
         if (targetBall && targetBall !== originalEl) {
@@ -254,12 +249,10 @@ function resetAfterMix() {
     
     if (phaseCompleted) {
         if (currentPhase === 1) {
-            // FASE 1: Espera 2 segundos mostrando o círculo incompleto e vai direto pro Mapa!
             setTimeout(() => {
                 finishPhase();
             }, 2000);
         } else {
-            // FASE 2 e 3: Espera 2 segundos mostrando o jogo e DEPOIS mostra o card de Vitória!
             setTimeout(() => {
                 const vic = document.getElementById('victory-overlay');
                 if(vic) vic.style.display = 'flex';
@@ -268,14 +261,57 @@ function resetAfterMix() {
     }
 }
 
-function showIntro(t, d) { 
-    document.getElementById('phase-title').innerText = t; 
-    document.getElementById('phase-desc').innerText = d; 
+/* ============================================================
+   NOVO SISTEMA DE INTRODUÇÃO (COM TROCA DE IMAGEM DO PERSONAGEM)
+============================================================ */
+let typeInterval = null; 
+
+function showIntro(phaseNumber) { 
     const intro = document.getElementById('phase-intro');
-    if(intro) intro.style.display = 'flex'; 
+    const textEl = document.getElementById('dialogue-text');
+    const titleEl = document.getElementById('dialogue-title');
+    
+    // Captura a imagem do personagem no HTML
+    const imgEl = document.getElementById('dialogue-img'); 
+
+    let characterName = "Mestre das Cores";
+    let textToType = "";
+
+    // Textos e Imagens personalizadas para cada fase
+    if (phaseNumber === 1) {
+        if (imgEl) imgEl.src = "assets/personagem.png"; // Personagem normal
+        textToType = "Saudações, aprendiz! Cientificamente, as cores primárias (Vermelho, Amarelo e Azul) são pigmentos puros que não podem ser criados por mistura. Elas são a base de tudo. Misture-as para começarmos nossa jornada!";
+    } 
+    else if (phaseNumber === 2) {
+        if (imgEl) imgEl.src = "assets/personagememposiçao.png"; // Personagem em nova pose!
+        textToType = "Excelente! O milagre da mistura de pigmentos... Quando duas Cores Primárias colidem, a magia acontece e nascem as Cores Secundárias. Seja um alquimista e descubra essas novas tonalidades!";
+    }
+    else if (phaseNumber === 3) {
+        if (imgEl) imgEl.src = "assets/personagem.png"; // Volta ao normal (ou mude se tiver outra foto)
+        textToType = "Nível Mestre atingido! Agora você deve completar o círculo cromático inteiro. Preste atenção na psicologia de cada cor que você criar!";
+    }
+
+    if (intro) intro.style.display = 'flex'; 
+    if (titleEl) titleEl.innerText = characterName;
+    
+    // Efeito de Máquina de Escrever (Digitação)
+    if (textEl) {
+        textEl.innerHTML = ""; 
+        clearInterval(typeInterval); 
+        
+        let i = 0;
+        typeInterval = setInterval(() => {
+            textEl.innerHTML += textToType.charAt(i);
+            i++;
+            if (i >= textToType.length) {
+                clearInterval(typeInterval); 
+            }
+        }, 40); 
+    }
 }
 
 function closeIntro() { 
+    clearInterval(typeInterval); // Para a digitação imediatamente se o jogador pular
     const intro = document.getElementById('phase-intro');
     if(intro) intro.style.display = 'none'; 
 }
@@ -285,7 +321,6 @@ function finishPhase() {
         unlockedLevel = Math.max(unlockedLevel, currentPhase + 1);
         selectedPhase = Math.min(unlockedLevel, 4); 
         
-        // SALVA O PROGRESSO NA MEMÓRIA
         localStorage.setItem('progressoColorFusion', unlockedLevel.toString());
     }
     const vic = document.getElementById('victory-overlay');
