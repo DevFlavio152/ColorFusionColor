@@ -575,4 +575,138 @@
 
 }
 /* Isso é um comentário em CSS */
+/* =========================================
+   TUTORIAL SPOTLIGHT (HOLOFOTE)
+========================================= */
+#tutorial-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: 9998; /* Fica por cima de tudo */
+    pointer-events: none; /* Bloqueia cliques no fundo escuro */
+}
 
+#tutorial-spotlight {
+    position: absolute;
+    /* O truque do holofote: uma sombra preta gigante e semi-transparente */
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.75); 
+    border-radius: 20px;
+    border: 3px solid #10b981; /* Bordinha verde pra destacar */
+    transition: all 0.5s ease-in-out; /* Holofote se move suavemente */
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.tutorial-dialogue-container {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    max-width: 450px;
+    z-index: 10000; /* Acima da escuridão */
+    pointer-events: auto; /* Permite clicar no botão "Entendi!" */
+}
+
+/* Reutilizando as classes de diálogo da Fase 1 */
+.tutorial-dialogue-container .dialogue-character {
+    width: 200px;
+    margin-bottom: -30px;
+    z-index: 2;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+    animation: floatDialog 4s ease-in-out infinite;
+}
+
+.tutorial-dialogue-container .dialogue-box {
+    background: #ffffff;
+    border: 4px solid #2c3e50;
+    border-radius: 20px;
+    padding: 20px;
+    width: 100%;
+    z-index: 3;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+    box-sizing: border-box;
+}
+
+/* =========================================
+   ESTILOS DOS TEXTOS E BOTÃO DO DIÁLOGO
+========================================= */
+
+.dialogue-name {
+    margin: 0 0 10px 0;
+    color: #10b981; /* Verde do título */
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+}
+
+.dialogue-content {
+    margin: 0 0 20px 0;
+    color: #334155; /* Cor escura para o texto ficar legível no fundo branco */
+    font-size: 1.05rem;
+    line-height: 1.5;
+    font-weight: 600;
+    min-height: 80px; 
+}
+
+.btn-dialogue-next {
+    background: #2c3e50;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 12px;
+    font-weight: bold;
+    float: right; 
+    cursor: pointer;
+    transition: all 0.2s;
+    width: auto;
+    margin-top: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+.btn-dialogue-next:hover {
+    background: #1a252f;
+    transform: scale(1.05);
+}
+
+/* Animação do personagem flutuando (caso não esteja no arquivo) */
+@keyframes floatDialog {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Aumentando um pouco o personagem para ele ficar mais visível no PC */
+.tutorial-dialogue-container .dialogue-character {
+    width: 250px; 
+    margin-bottom: -30px;
+    z-index: 2;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+    animation: floatDialog 4s ease-in-out infinite;
+}
+
+/* =========================================
+   TUTORIAL DINÂMICO MOBILE (MOVE PRA CIMA)
+========================================= */
+@media (max-width: 768px) {
+    .tutorial-dialogue-container {
+        /* Adiciona uma transição suave para não pular bruscamente */
+        transition: top 0.4s ease, bottom 0.4s ease; 
+    }
+    
+    .tutorial-dialogue-container.move-top {
+        bottom: auto !important; /* Desliga a fixação no fundo */
+        top: 20px !important; /* Fixa no topo */
+        flex-direction: column-reverse; /* Inverte: Caixa em cima, Personagem embaixo! */
+        
+    }
+    
+    .tutorial-dialogue-container.move-top .dialogue-character {
+        margin-bottom: 0;
+        margin-top: -10px; /* Faz o personagem sobrepor a caixa por baixo */
+        z-index: 4; /* Garante que ele fique acima da borda da caixa */
+        margin-left: 170px;
+    }
+}

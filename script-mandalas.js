@@ -168,6 +168,9 @@ window.addEventListener('resize', ajustarAlturaMobile);
         renderizarCores('grid-cores-1', applyColor1);
         setupMandala1();
         initPanZoom('canvas-mold-1', 'mandala-svg-1'); 
+
+        // INICIA O TUTORIAL DEPOIS QUE TUDO CARREGAR
+        startTutorial();
     }
 
     function setupMandala1() {
@@ -324,3 +327,112 @@ window.addEventListener('resize', ajustarAlturaMobile);
     // Viaja diretamente para o ficheiro da Fase 4!
     window.location.href = "cores.html";
 }
+
+/* ============================================================
+   LÓGICA DO TUTORIAL DAS MANDALAS (MULTI-ETAPA)
+============================================================ */
+let tutorialStep = 0;
+let tutTypeInterval = null;
+
+const isMobileDevice = window.innerWidth <= 768;
+const actionWord = isMobileDevice ? "Toque" : "Clique"; 
+
+function startTutorial() {
+    document.getElementById('tutorial-overlay').style.display = 'block';
+    tutorialStep = 1;
+    setTimeout(runTutorialStep, 500); 
+}
+
+/* ============================================================
+   SEQUÊNCIA COMPLETA E DIDÁTICA DO TUTORIAL
+============================================================ */
+function runTutorialStep() {
+    const spotlight = document.getElementById('tutorial-spotlight');
+    const dialogContainer = document.querySelector('.tutorial-dialogue-container');
+    
+    // --- MÁGICA DO MOBILE: MOVE A CAIXA PARA NÃO COBRIR O HOLOFOTE ---
+    if (isMobileDevice && dialogContainer) {
+        if (tutorialStep >= 2) {
+            // Do passo 2 em diante (elementos na base), a caixa vai pro topo
+            dialogContainer.classList.add('move-top');
+        } else {
+            // No passo 1 (Mandala no topo), a caixa fica na base
+            dialogContainer.classList.remove('move-top');
+        }
+    }
+    
+    if (tutorialStep === 1) {
+        // PASSO 1: A PÉTALA (AÇÃO INICIAL)
+        const primeiraPetala = document.querySelector('.mandala-part');
+        highlightElementRaw(primeiraPetala); 
+        typeTutorialText(`Para começar sua obra, ${actionWord} em uma das partes da mandala, como esta área que destaquei.`);
+    } 
+    else if (tutorialStep === 2) {
+        // PASSO 2: O OBJETIVO (ID: msg-box)
+        highlightElement('msg-box');
+        typeTutorialText(`Fique de olho aqui! Este é o seu objetivo: Para vencer esta fase, você deve usar apenas tons de uma mesma família de cores.`);
+    }
+    else if (tutorialStep === 3) {
+        // PASSO 3: AS CORES (ID: grid-cores-1)
+        highlightElement('grid-cores-1');
+        typeTutorialText(`Aqui estão seus pigmentos. Escolha tons que pertençam à família que você definiu para manter a monocromia.`);
+    }
+    else if (tutorialStep === 4) {
+        // PASSO 4: VERIFICAR (ID: btn-send-1)
+        highlightElement('btn-send-1');
+        typeTutorialText(`Terminou a pintura? Use este botão para que eu possa validar sua técnica e sua percepção das cores.`);
+    }
+    else if (tutorialStep === 5) {
+        // PASSO 5: REINICIAR (.btn-reset)
+        const btnReset = document.querySelector('.btn-reset');
+        highlightElementRaw(btnReset);
+        typeTutorialText(`A arte é feita de tentativas. Se precisar recomeçar sua inspiração do zero, utilize o botão de reiniciar.`);
+    }
+    else if (tutorialStep === 6) {
+        // PASSO 6: TELA CHEIA (.btn-fullscreen)
+        const btnFull = document.querySelector('.btn-fullscreen');
+        highlightElementRaw(btnFull);
+        typeTutorialText(`Por fim, se quiser apreciar sua criação sem distrações, o modo Tela Cheia é perfeito para você.`);
+    }
+    else {
+        // FIM DO TUTORIAL
+        if (dialogContainer) dialogContainer.classList.remove('move-top'); // Reseta a classe
+        document.getElementById('tutorial-overlay').style.display = 'none';
+    }
+}
+
+function nextTutorialStep() {
+    tutorialStep++;
+    runTutorialStep();
+}
+
+function highlightElement(elementId) {
+    const target = document.getElementById(elementId);
+    highlightElementRaw(target);
+}
+
+// Versão que aceita o elemento direto (útil para botões sem ID)
+function highlightElementRaw(target) {
+    const spotlight = document.getElementById('tutorial-spotlight');
+    if (target && spotlight) {
+        const rect = target.getBoundingClientRect(); 
+        spotlight.style.top = (rect.top - 5) + 'px';
+        spotlight.style.left = (rect.left - 5) + 'px';
+        spotlight.style.width = (rect.width + 10) + 'px';
+        spotlight.style.height = (rect.height + 10) + 'px';
+    }
+}
+
+function typeTutorialText(textToType) {
+    const textEl = document.getElementById('tutorial-text');
+    if (!textEl) return;
+    textEl.innerHTML = ""; 
+    clearInterval(tutTypeInterval); 
+    let i = 0;
+    tutTypeInterval = setInterval(() => {
+        textEl.innerHTML += textToType.charAt(i);
+        i++;
+        if (i >= textToType.length) clearInterval(tutTypeInterval);
+    }, 30);
+}
+
