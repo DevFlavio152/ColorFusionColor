@@ -392,7 +392,7 @@ function runTutorialStep() {
         // PASSO 6: TELA CHEIA (.btn-fullscreen)
         const btnFull = document.querySelector('.btn-fullscreen');
         highlightElementRaw(btnFull);
-        typeTutorialText(`Por fim, se quiser apreciar sua criação sem distrações, o modo Tela Cheia é perfeito para você.`);
+        typeTutorialText(`Por fim, se quiser ver melhor a as cores, use este botão para expandir a paleta em tela cheia. Isso pode ajudar na hora de escolher os tons certos!`);
     }
     else {
         // FIM DO TUTORIAL

@@ -615,8 +615,9 @@
     width: 200px;
     margin-bottom: -30px;
     z-index: 2;
+    margin-top: -100px;
     filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
-    animation: floatDialog 4s ease-in-out infinite;
+    margin-left: 220px;
 }
 
 .tutorial-dialogue-container .dialogue-box {
@@ -625,6 +626,9 @@
     border-radius: 20px;
     padding: 20px;
     width: 100%;
+    position: relative;
+    margin-top: -350px;
+    margin-bottom: 150px;
     z-index: 3;
     box-shadow: 0 15px 30px rgba(0,0,0,0.4);
     box-sizing: border-box;
@@ -674,8 +678,7 @@
 
 /* Animação do personagem flutuando (caso não esteja no arquivo) */
 @keyframes floatDialog {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    
 }
 
 /* Aumentando um pouco o personagem para ele ficar mais visível no PC */
@@ -698,14 +701,14 @@
     
     .tutorial-dialogue-container.move-top {
         bottom: auto !important; /* Desliga a fixação no fundo */
-        top: 20px !important; /* Fixa no topo */
+        top: 500px !important; /* Fixa no topo */
         flex-direction: column-reverse; /* Inverte: Caixa em cima, Personagem embaixo! */
         
     }
     
     .tutorial-dialogue-container.move-top .dialogue-character {
         margin-bottom: 0;
-        margin-top: -10px; /* Faz o personagem sobrepor a caixa por baixo */
+        margin-top: -150px; /* Faz o personagem sobrepor a caixa por baixo */
         z-index: 4; /* Garante que ele fique acima da borda da caixa */
         margin-left: 170px;
     }
