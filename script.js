@@ -283,7 +283,7 @@ function showIntro(phaseNumber) {
         textToType = "Saudações, aprendiz! Cientificamente, as cores primárias (Vermelho, Amarelo e Azul) são pigmentos puros que não podem ser criados por mistura. Elas são a base de tudo. Misture-as para começarmos nossa jornada!";
     } 
     else if (phaseNumber === 2) {
-        if (imgEl) imgEl.src = "assets/personagememposiçao.png"; // Personagem em nova pose!
+        if (imgEl) imgEl.src = "Assets/personagememposiçao.png"; // Personagem em nova pose!
         textToType = "Excelente! O milagre da mistura de pigmentos... Quando duas Cores Primárias colidem, a magia acontece e nascem as Cores Secundárias. Seja um alquimista e descubra essas novas tonalidades!";
     }
     else if (phaseNumber === 3) {
