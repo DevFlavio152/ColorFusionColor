@@ -484,6 +484,7 @@ body {
     .phase-card-premium h1 { font-size: 1.8rem; }
     .phase-concept { font-size: 1rem; }
     .color-dot { width: 35px; height: 35px; }
+    
 }
 
 /* =========================================
@@ -503,6 +504,7 @@ body {
 
 .dialogue-character {
     width: 525px; /* Ajuste o tamanho do seu personagem aqui */
+    
     margin-bottom: -30px; /* Faz o personagem sobrepor a caixa de texto */
     z-index: 2;
     filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
