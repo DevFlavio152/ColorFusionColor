@@ -59,7 +59,7 @@ function selectPhase(level) {
 }
 
 function updateMapUI() {
-    const names = ["Primárias", "Secundárias", "Mono&Poli", "Quentes e Frias"]; 
+    const names = ["Secundarias", "Terciárias", "Mono&Poli", "Quentes e Frias"]; 
     for (let i = 1; i <= 4; i++) { 
         const node = document.getElementById(`node-${i}`);
         if(node) {
@@ -280,7 +280,7 @@ function showIntro(phaseNumber) {
     // Textos e Imagens personalizadas para cada fase
     if (phaseNumber === 1) {
         if (imgEl) imgEl.src = "Assets/personagem.png"; // Personagem normal
-        textToType = "Saudações, aprendiz! Cientificamente, as cores primárias (Vermelho, Amarelo e Azul) são pigmentos puros que não podem ser criados por mistura. Elas são a base de tudo. Misture-as para começarmos nossa jornada!";
+        textToType = "Saudações, aprendiz! Cientificamente, as cores primárias são pigmentos puros que não podem ser criados por mistura. Elas são a base de tudo. Misture-as para começarmos nossa jornada!";
     } 
     else if (phaseNumber === 2) {
         if (imgEl) imgEl.src = "Assets/personagememposiçao.png"; // Personagem em nova pose!
