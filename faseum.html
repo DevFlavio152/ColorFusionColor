@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fase 1: Desafio da Memória Primária</title>
+    <link rel="stylesheet" href="style-faseum.css">
+</head>
+<body>
+    
+    <div id="intro-modal" class="modal-overlay">
+        <div class="modal-content">
+            <img src="Assets/saudaçoesdois.png" alt="Mestre das Cores" class="avatar-mestre" onerror="this.style.display='none'">
+            <h2 style="color: #3498db; margin: 10px 0;">O Segredo das Cores Primárias</h2>
+            <p style="text-align: left; font-size: 1rem; line-height: 1.5; color: #444; margin-bottom: 20px;">
+                Saudações, aprendiz! Preste muita atenção, pois só direi isto uma vez: <br><br>
+                Cientificamente, as <strong>Cores Primárias (Vermelho, Azul e Amarelo)</strong> são as cores puras e originais. Elas <b>NÃO</b> podem ser criadas pela mistura de nenhuma outra cor. Elas são a base de tudo!<br><br>
+                Sua missão: Vire as cartas. Se achar uma cor, eu perguntarei se ela é primária. Se acertar, ela vai para o seu Círculo Cromático!
+            </p>
+            <button class="btn-primary" onclick="fecharIntro()">Entendi o Desafio!</button>
+        </div>
+    </div>
+
+    <div id="question-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content" style="max-width: 350px;">
+            <div id="cor-revelada-display" class="color-display-circle"></div>
+            <h2 id="cor-revelada-nome" style="margin: 15px 0;">Cor</h2>
+            <p style="font-size: 1.1rem; font-weight: bold; margin-bottom: 25px;">Esta é uma Cor Primária?</p>
+            
+            <div class="btn-group">
+                <button class="btn-yes" onclick="responderPergunta(true)">SIM</button>
+                <button class="btn-no" onclick="responderPergunta(false)">NÃO</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="feedback-modal" class="modal-overlay" style="display: none; background: transparent;">
+        <div class="feedback-toast" id="feedback-toast">
+            <h3 id="feedback-title">Resposta</h3>
+            <p id="feedback-text">Texto</p>
+        </div>
+    </div>
+
+    <div class="fase1-wrapper">
+        <div class="header">
+            <h1>Enigma das Cores</h1>
+            <p>Encontre as 3 Cores Primárias</p>
+        </div>
+
+        <div class="game-area">
+            <div class="wheel-section">
+                <div class="beautiful-wheel">
+                    <div class="slot slot-amarelo" id="slot-amarelo"></div>
+                    <div class="slot slot-azul" id="slot-azul"></div>
+                    <div class="slot slot-vermelho" id="slot-vermelho"></div>
+                    <div class="wheel-center-hole"></div>
+                </div>
+            </div>
+
+            <div class="cards-section">
+                <div class="cards-grid" id="cards-grid">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TELA DE VITÓRIA -->
+    <div id="victory-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h1 style="color: #27ae60; margin-bottom: 15px;">Genial! 🎨</h1>
+            <p style="font-size: 1.1rem; line-height: 1.5; margin-bottom: 5px;">
+                Você provou que conhece a base da teoria das cores! Com Vermelho, Azul e Amarelo em mãos, você está pronto para fazer magia.
+            </p>
+            
+            <!-- CÍRCULO DA VITÓRIA (ESTILO FATIAS) -->
+            <div style="display: flex; justify-content: center; transform: scale(0.65); margin-top: -30px; margin-bottom: -15px;">
+                <div class="beautiful-wheel">
+                    <div class="slot slot-amarelo filled" style="background: #ffff00;"></div>
+                    <div class="slot slot-azul filled" style="background: #2e86de;"></div>
+                    <div class="slot slot-vermelho filled" style="background: #ff4757;"></div>
+                    <div class="wheel-center-hole"></div>
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="avancarParaFase2()">Avançar para a Fase 2</button>
+        </div>
+    </div>
+
+    <script src="script-faseum.js"></script>
+    <script src="script-debug.js"></script>
+</body>
+</html>

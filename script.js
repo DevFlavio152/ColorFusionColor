@@ -1,18 +1,41 @@
-// Puxa o número que veio da URL
-let unlockedLevel = parseInt(window.NIVEL_DESBLOQUEADO) || 1;
-let selectedPhase = unlockedLevel > 4 ? 4 : unlockedLevel; 
+// Puxa o progresso do localStorage
+let savedLevel = localStorage.getItem('progressoColorFusion');
+let unlockedLevel = savedLevel ? parseInt(savedLevel) : 1;
+let selectedPhase = unlockedLevel > 5 ? 5 : unlockedLevel; 
 let currentPhase = 1;
 let mixedInPhase = new Set();
 let draggedClone = null, originalEl = null, offsetX = 0, offsetY = 0;
 let phaseCompleted = false;
 
-// Se veio do link de outra fase, pula a tela inicial e vai direto pro mapa!
 window.onload = () => {
-    if (unlockedLevel > 1) {
-        const mainMenu = document.getElementById('main-menu');
-        const mapScreen = document.getElementById('map-screen');
-        if (mainMenu) mainMenu.style.display = 'none';
-        if (mapScreen) mapScreen.style.display = 'flex';
+    // 1. DETECTA SE A PÁGINA FOI ATUALIZADA (F5 / RELOAD)
+    const perfEntries = performance.getEntriesByType("navigation");
+    const isReload = (perfEntries.length > 0 && perfEntries[0].type === "reload") || 
+                     (performance.navigation && performance.navigation.type === 1);
+
+    if (isReload) {
+        // Se deu F5, apaga todo o progresso e limpa a sessão
+        localStorage.removeItem('progressoColorFusion');
+        sessionStorage.clear();
+        unlockedLevel = 1;
+        selectedPhase = 1;
+    } else {
+        // Se NÃO foi F5, carrega o progresso salvo normalmente
+        savedLevel = localStorage.getItem('progressoColorFusion');
+        unlockedLevel = savedLevel ? parseInt(savedLevel) : 1;
+        selectedPhase = unlockedLevel > 5 ? 5 : unlockedLevel;
+    }
+
+    // 2. VERIFICA SE O JOGADOR ESTÁ VOLTANDO DE UMA FASE
+    const urlParams = new URLSearchParams(window.location.search);
+    const veioDeFase = urlParams.get('map') === 'true' || sessionStorage.getItem('voltarParaOMapa') === 'true';
+
+    if (!isReload && veioDeFase) {
+        showMap(); // Vai para o mapa se estiver navegando entre fases
+    } else {
+        // Se foi F5 ou primeira abertura, volta para a TELA INICIAL
+        document.getElementById('main-menu').style.display = 'flex';
+        document.getElementById('map-screen').style.display = 'none';
         updateMapUI();
     }
 };
@@ -46,6 +69,12 @@ const mixes = {
 };
 
 function showMap() {
+    sessionStorage.setItem('voltarParaOMapa', 'true');
+
+    savedLevel = localStorage.getItem('progressoColorFusion');
+    unlockedLevel = savedLevel ? parseInt(savedLevel) : 1;
+    selectedPhase = unlockedLevel > 5 ? 5 : unlockedLevel;
+
     document.getElementById('main-menu').style.display = 'none';
     document.getElementById('map-screen').style.display = 'flex';
     updateMapUI();
@@ -59,12 +88,32 @@ function selectPhase(level) {
 }
 
 function updateMapUI() {
-    const names = ["Secundarias", "Terciárias", "Mono&Poli", "Quentes e Frias"]; 
-    for (let i = 1; i <= 4; i++) { 
+    const names = ["Introdução", "Secundárias", "Terciárias", "Mono&Poli", "Quentes e Frias"]; 
+    
+    // Atualiza o estado visual dos Nós (bolinhas) e Linhas
+    for (let i = 1; i <= 5; i++) { 
         const node = document.getElementById(`node-${i}`);
-        if(node) {
-            node.className = (i <= unlockedLevel) ? 'phase-node active' : 'phase-node locked';
+        if (node) {
+            if (i < unlockedLevel) {
+                node.className = 'phase-node completed'; // Concluída
+            } else if (i === unlockedLevel) {
+                node.className = 'phase-node active';    // Fase atual liberada
+            } else {
+                node.className = 'phase-node locked';    // Bloqueada
+            }
             node.style.border = (i === selectedPhase) ? "3px solid #2c3e50" : "none";
+        }
+
+        // Atualiza a linha de conexão com a próxima fase (ex: linha 1-2, 2-3, etc.)
+        const line = document.getElementById(`line-${i}`) || document.getElementById(`linha-fase${i}`);
+        if (line) {
+            if (i < unlockedLevel) {
+                line.classList.add('linha-amarela');
+                line.classList.remove('linha-desativada');
+            } else {
+                line.classList.remove('linha-amarela');
+                line.classList.add('linha-desativada');
+            }
         }
     }
     
@@ -75,12 +124,15 @@ function updateMapUI() {
 }
 
 function startGame() {
-    if (selectedPhase === 3) {
+    if (selectedPhase === 1) {
+        window.location.href = "faseum.html"; 
+        return; 
+    }
+    if (selectedPhase === 4) {
         window.location.href = "mandalas.html"; 
         return; 
     }
-    
-    if (selectedPhase === 4) {
+    if (selectedPhase === 5) {
         window.location.href = "cores.html"; 
         return; 
     }
@@ -92,20 +144,17 @@ function startGame() {
 
 function initPhase(phase) {
     currentPhase = phase;
-    
-    // CRÍTICO: Limpa os dados de vitórias anteriores
     mixedInPhase.clear();
     phaseCompleted = false;
 
     const area = document.getElementById('color-area');
     if (area) area.innerHTML = '';
     
-    // CRÍTICO: Limpa a roda cromática
     const wheel = document.getElementById('chromatic-wheel');
     if (wheel) wheel.innerHTML = '';
     
-    if (phase === 1) {
-        showIntro(1); // Chama a introdução premium da Fase 1
+    if (phase === 2) {
+        showIntro(2); 
         const tri = document.createElement('div'); tri.className = "phase1-triangle";
         area.appendChild(tri);
         const colors = [{id:'azul', hex:'#2e86de', lab:'AZUL'},{id:'vermelho', hex:'#ff4757', lab:'VERMELHO'},{id:'amarelo', hex:'#ffff00', lab:'AMARELO'}];
@@ -113,23 +162,12 @@ function initPhase(phase) {
             createBall(c.id, c.hex, c.lab, tri); 
             addSlice(c.lab.charAt(0)+c.lab.slice(1).toLowerCase(), c.hex);
         });
-    } else if (phase === 2) {
-        showIntro(2); // Chama a introdução premium da Fase 2
+    } 
+    else if (phase === 3) {
+        showIntro(3); 
         const cols = document.createElement('div'); cols.className = "phase2-columns";
         area.appendChild(cols);
         const colors = [{id:'azul', hex:'#2e86de', lab:'AZUL'},{id:'vermelho', hex:'#ff4757', lab:'VERMELHO'},{id:'amarelo', hex:'#ffff00', lab:'AMARELO'},{id:'roxo', hex:'#8e44ad', lab:'ROXO'},{id:'verde', hex:'#27ae60', lab:'VERDE'},{id:'laranja', hex:'#e67e22', lab:'LARANJA'}];
-        colors.forEach(c => { 
-            createBall(c.id, c.hex, c.lab, cols); 
-            addSlice(c.id.charAt(0).toUpperCase()+c.id.slice(1), c.hex); 
-        });
-    } else if (phase === 3) {
-        showIntro(3);
-        const cols = document.createElement('div'); cols.className = "phase2-columns"; 
-        area.appendChild(cols);
-        const colors = [
-            {id:'azul', hex:'#2e86de', lab:'AZUL'}, {id:'vermelho', hex:'#ff4757', lab:'VERM.'}, {id:'amarelo', hex:'#ffff00', lab:'AMAR.'},
-            {id:'roxo', hex:'#8e44ad', lab:'ROXO'}, {id:'verde', hex:'#27ae60', lab:'VERDE'}, {id:'laranja', hex:'#e67e22', lab:'LARANJA'}
-        ];
         colors.forEach(c => { 
             createBall(c.id, c.hex, c.lab, cols); 
             addSlice(c.id.charAt(0).toUpperCase()+c.id.slice(1), c.hex); 
@@ -219,8 +257,8 @@ function showResult(result) {
 
 function checkWin() {
     let goal = 3; 
-    if (currentPhase === 2) goal = 6;  
-    if (currentPhase === 3) goal = 12; 
+    if (currentPhase === 2) goal = 3;  
+    if (currentPhase === 3) goal = 6; 
     
     if (mixedInPhase.size >= goal) {
         phaseCompleted = true;
@@ -248,7 +286,7 @@ function resetAfterMix() {
     if(overlay) overlay.style.display = 'none'; 
     
     if (phaseCompleted) {
-        if (currentPhase === 1) {
+        if (currentPhase === 2) { 
             setTimeout(() => {
                 finishPhase();
             }, 2000);
@@ -261,40 +299,29 @@ function resetAfterMix() {
     }
 }
 
-/* ============================================================
-   NOVO SISTEMA DE INTRODUÇÃO (COM TROCA DE IMAGEM DO PERSONAGEM)
-============================================================ */
 let typeInterval = null; 
 
 function showIntro(phaseNumber) { 
     const intro = document.getElementById('phase-intro');
     const textEl = document.getElementById('dialogue-text');
     const titleEl = document.getElementById('dialogue-title');
-    
-    // Captura a imagem do personagem no HTML
     const imgEl = document.getElementById('dialogue-img'); 
 
     let characterName = "Mestre das Cores";
     let textToType = "";
 
-    // Textos e Imagens personalizadas para cada fase
-    if (phaseNumber === 1) {
-        if (imgEl) imgEl.src = "Assets/personagem.png"; // Personagem normal
+    if (phaseNumber === 2) {
+        if (imgEl) imgEl.src = "Assets/personagem.png";
         textToType = "Saudações, aprendiz! Cientificamente, as cores primárias são pigmentos puros que não podem ser criados por mistura. Elas são a base de tudo. Misture-as para começarmos nossa jornada!";
     } 
-    else if (phaseNumber === 2) {
-        if (imgEl) imgEl.src = "Assets/personagememposiçao.png"; // Personagem em nova pose!
-        textToType = "Excelente! O milagre da mistura de pigmentos... Quando duas Cores Primárias colidem, a magia acontece e nascem as Cores Secundárias. Seja um alquimista e descubra essas novas tonalidades!";
-    }
     else if (phaseNumber === 3) {
-        if (imgEl) imgEl.src = "Assets/personagem.png"; // Volta ao normal (ou mude se tiver outra foto)
-        textToType = "Nível Mestre atingido! Agora você deve completar o círculo cromático inteiro. Preste atenção na psicologia de cada cor que você criar!";
+        if (imgEl) imgEl.src = "Assets/personagememposiçao.png"; 
+        textToType = "Excelente! O milagre da mistura de pigmentos... Quando duas Cores Primárias colidem, a magia acontece e nascem as Cores Secundárias. Seja um alquimista e descubra essas novas tonalidades!";
     }
 
     if (intro) intro.style.display = 'flex'; 
     if (titleEl) titleEl.innerText = characterName;
     
-    // Efeito de Máquina de Escrever (Digitação)
     if (textEl) {
         textEl.innerHTML = ""; 
         clearInterval(typeInterval); 
@@ -311,7 +338,7 @@ function showIntro(phaseNumber) {
 }
 
 function closeIntro() { 
-    clearInterval(typeInterval); // Para a digitação imediatamente se o jogador pular
+    clearInterval(typeInterval);
     const intro = document.getElementById('phase-intro');
     if(intro) intro.style.display = 'none'; 
 }
@@ -319,7 +346,7 @@ function closeIntro() {
 function finishPhase() {
     if (phaseCompleted) {
         unlockedLevel = Math.max(unlockedLevel, currentPhase + 1);
-        selectedPhase = Math.min(unlockedLevel, 4); 
+        selectedPhase = Math.min(unlockedLevel, 5); 
         
         localStorage.setItem('progressoColorFusion', unlockedLevel.toString());
     }
@@ -327,7 +354,8 @@ function finishPhase() {
     if(vic) vic.style.display = 'none';
     
     const game = document.getElementById('game-screen');
-    if(game) game.style.display = 'none';
+    if(game) game.style.display = 'none'; 
     
     showMap();
 }
+

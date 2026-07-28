@@ -147,3 +147,52 @@
   }
   
   strong { color: var(--text-main); }
+
+ /* =========================================
+   ESTILO DO MESTRE DAS CORES DENTRO DO CARD (CENTRALIZADO)
+   ========================================= */
+.mestre-header {
+  display: flex;
+  flex-direction: column; /* Coloca a imagem no topo e o texto embaixo */
+  align-items: center;    /* Centraliza tudo na horizontal */
+  text-align: center;     /* Centraliza o texto */
+  gap: 8px;
+  border-bottom: 2px solid #f0f4f8;
+  padding-bottom: 15px;
+  margin-bottom: 10px;
+}
+
+.mestre-avatar {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  background: #f8fafc;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  padding: 5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+.mestre-tag {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  margin-top: 4px;
+}
+
+.card-titulo {
+  color: var(--text-main);
+  margin: 2px 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.card-subtitulo {
+  color: var(--text-light);
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+}

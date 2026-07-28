@@ -1,0 +1,238 @@
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+}
+
+body {
+    background-color: #f0f4f8; /* Fundo clarinho padrão do jogo */
+    color: #2c3e50; /* Texto azul escuro/chumbo */
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.fase1-wrapper {
+    background: #ffffff; /* Container principal branco */
+    width: 100%;
+    max-width: 800px;
+    padding: 40px;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* Sombra suave */
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.header { text-align: center; }
+.header h1 { 
+    color: #1a252f; /* Cor escura elegante */
+    font-size: 2rem; 
+    margin-bottom: 8px; 
+}
+.header p { 
+    color: #7f8c8d; 
+    font-size: 1.1rem; 
+}
+
+.game-area {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    gap: 40px;
+}
+
+/* =========================================
+   CÍRCULO CROMÁTICO (ESTILO DONUT / FATIAS)
+========================================= */
+.wheel-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.beautiful-wheel {
+    position: relative;
+    width: 240px; 
+    height: 240px;
+    background: #ffffff; /* Fundo branco puro da imagem */
+    border: 4px solid #cbd5e1; /* Borda cinza suave externa */
+    border-radius: 50%; 
+    overflow: hidden; /* Corta as bordas das fatias para ficarem redondas */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05); /* Sombra bem leve */
+}
+
+/* O buraco do meio */
+.wheel-center-hole {
+    position: absolute;
+    width: 85px;
+    height: 85px;
+    background: #f0f4f8; /* Mesma cor do fundo da página */
+    border: 4px solid #cbd5e1; /* Borda cinza suave interna */
+    border-radius: 50%;
+    z-index: 10;
+}
+
+/* Base das fatias (escondidas no começo) */
+.slot {
+    position: absolute;
+    top: 0; 
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Desenha exatamente uma fatia (cone) projetada para cima */
+    clip-path: polygon(50% 50%, 25% 0%, 75% 0%);
+    opacity: 0; /* Invisível antes de acertar a carta */
+    z-index: 5;
+    transition: opacity 0.5s ease;
+}
+
+/* Rotaciona as fatias para suas posições exatas na roleta */
+.slot-azul { transform: rotate(0deg); }       /* Topo */
+.slot-amarelo { transform: rotate(120deg); }  /* Direita embaixo */
+.slot-vermelho { transform: rotate(240deg); } /* Esquerda embaixo */
+
+/* Quando a cor acerta, ela simplesmente aparece! */
+.slot.filled {
+    opacity: 1;
+}
+
+/* =========================================
+   SISTEMA DE CARTAS (JOGO DA MEMÓRIA)
+========================================= */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 colunas para caber 12 cartas */
+    gap: 12px;
+}
+
+.card {
+    width: 75px;  /* Ligeiramente menores */
+    height: 100px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.card-front {
+    background: linear-gradient(135deg, #1abc9c, #16a085);
+    border: 3px solid #fff;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.card-back {
+    background: #fff;
+    transform: rotateY(180deg);
+    border: 4px solid #fff;
+}
+
+.card.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+/* Deixa responsivo para caber bonitinho na tela do celular */
+@media (max-width: 650px) {
+    .cards-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 colunas no celular */
+        gap: 10px;
+    }
+    .card {
+        width: 70px;
+        height: 90px;
+    }
+}
+
+/* =========================================
+   MODAIS E BOTÕES
+========================================= */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(44, 62, 80, 0.8); /* Fundo escuro azulado transparente */
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #ffffff; color: #2c3e50;
+    padding: 35px; border-radius: 20px;
+    text-align: center; max-width: 450px; width: 90%;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    animation: popIn 0.3s ease;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.avatar-mestre { width: 130px; height: 130px; border-radius: 50%; margin-bottom: 15px; }
+.color-display-circle { width: 90px; height: 90px; border-radius: 50%; margin: 0 auto; box-shadow: 0 5px 15px rgba(0,0,0,0.15); border: 4px solid #f0f4f8; }
+
+/* Botões com o verde padrão do seu jogo */
+.btn-primary, .btn-yes, .btn-no {
+    border: none; border-radius: 30px; padding: 14px 28px;
+    font-size: 1rem; font-weight: bold; cursor: pointer; color: white;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-primary { 
+    background: #27ae60; /* Verde principal do jogo */
+    width: 100%; 
+    box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
+}
+.btn-primary:hover { 
+    transform: scale(1.03); 
+    background: #219150; 
+}
+
+.btn-group { display: flex; gap: 15px; justify-content: center; margin-top: 15px; }
+.btn-yes { background: #27ae60; flex: 1; }
+.btn-yes:hover { transform: scale(1.05); background: #219150; }
+.btn-no { background: #e74c3c; flex: 1; }
+.btn-no:hover { transform: scale(1.05); background: #c0392b; }
+
+/* Toast de Feedback Rápido */
+.feedback-toast {
+    background: #ffffff; padding: 20px 30px; border-radius: 15px;
+    text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    animation: slideDown 0.3s ease;
+    border-bottom: 4px solid #3498db;
+}
+
+@keyframes slideDown {
+    0% { transform: translateY(-50px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
