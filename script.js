@@ -13,6 +13,11 @@ window.onload = () => {
     const isReload = (perfEntries.length > 0 && perfEntries[0].type === "reload") || 
                      (performance.navigation && performance.navigation.type === 1);
 
+    // LÊ OS PARÂMETROS DA URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const veioDeFase = urlParams.get('map') === 'true' || sessionStorage.getItem('voltarParaOMapa') === 'true';
+    const faseDireta = urlParams.get('phase'); // <-- NOVO: Detecta se foi pedido para abrir a Fase 3 diretamente
+
     if (isReload) {
         // Se deu F5, apaga todo o progresso e limpa a sessão
         localStorage.removeItem('progressoColorFusion');
@@ -26,11 +31,23 @@ window.onload = () => {
         selectedPhase = unlockedLevel > 5 ? 5 : unlockedLevel;
     }
 
-    // 2. VERIFICA SE O JOGADOR ESTÁ VOLTANDO DE UMA FASE
-    const urlParams = new URLSearchParams(window.location.search);
-    const veioDeFase = urlParams.get('map') === 'true' || sessionStorage.getItem('voltarParaOMapa') === 'true';
-
-    if (!isReload && veioDeFase) {
+    // 2. VERIFICA PARA ONDE O JOGADOR DEVE IR
+    if (!isReload && faseDireta) {
+        // <-- NOVO: Se veio da Mandala pedindo a Fase 3, entra direto nela
+        const faseNum = parseInt(faseDireta);
+        
+        if (unlockedLevel < faseNum) {
+            unlockedLevel = faseNum;
+            localStorage.setItem('progressoColorFusion', unlockedLevel.toString());
+        }
+        
+        document.getElementById('main-menu').style.display = 'none';
+        document.getElementById('map-screen').style.display = 'none';
+        
+        selectedPhase = faseNum;
+        startGame(); // Inicia a Fase 3 diretamente
+    } 
+    else if (!isReload && veioDeFase) {
         showMap(); // Vai para o mapa se estiver navegando entre fases
     } else {
         // Se foi F5 ou primeira abertura, volta para a TELA INICIAL
@@ -39,6 +56,15 @@ window.onload = () => {
         updateMapUI();
     }
 };
+
+// Função inteligente que sabe para onde voltar
+function goBackToPreviousPhase() {
+    if (currentPhase === 3) {
+        initPhase(2); // Volta da 3 para a 2
+    } else if (currentPhase === 2) {
+        window.location.href = "faseum.html"; // Volta da 2 para a 1
+    }
+}
 
 const wheelMap = { 
     'Azul': 0, 'Azul-esverdeado': 30, 'Verde': 60, 'Amarelo-esverdeado': 90, 
@@ -172,6 +198,22 @@ function initPhase(phase) {
             createBall(c.id, c.hex, c.lab, cols); 
             addSlice(c.id.charAt(0).toUpperCase()+c.id.slice(1), c.hex); 
         });
+    }
+
+    // Substitua o código do botão no final da função initPhase por este:
+    const btnBack = document.getElementById('btn-back-phase');
+    const btnBackText = document.getElementById('btn-back-text');
+    
+    if (btnBack && btnBackText) {
+        if (phase === 3) {
+            btnBack.style.display = 'flex';
+            btnBackText.innerText = 'Voltar à Fase 2';
+        } else if (phase === 2) {
+            btnBack.style.display = 'flex';
+            btnBackText.innerText = 'Voltar à Fase 1';
+        } else {
+            btnBack.style.display = 'none';
+        }
     }
 }
 
@@ -312,11 +354,11 @@ function showIntro(phaseNumber) {
 
     if (phaseNumber === 2) {
         if (imgEl) imgEl.src = "Assets/personagem.png";
-        textToType = "Saudações, aprendiz! Cientificamente, as cores primárias são pigmentos puros que não podem ser criados por mistura. Elas são a base de tudo. Misture-as para começarmos nossa jornada!";
+        textToType = "Saudações, aprendiz! Cientificamente, as cores secundárias surgem da mistura de duas cores primárias. Elas revelam como novas tonalidades podem ser criadas a partir das cores fundamentais. Combine as cores corretamente para continuarmos nossa jornada!";
     } 
     else if (phaseNumber === 3) {
         if (imgEl) imgEl.src = "Assets/personagememposiçao.png"; 
-        textToType = "Excelente! O milagre da mistura de pigmentos... Quando duas Cores Primárias colidem, a magia acontece e nascem as Cores Secundárias. Seja um alquimista e descubra essas novas tonalidades!";
+        textToType = "Excelente, aprendiz! Agora chegou o momento de explorar um novo nível da teoria das cores. As cores terciárias surgem da mistura de uma cor primária com uma cor secundária vizinha no círculo cromático, criando tonalidades ainda mais ricas e variadas. Torne-se um verdadeiro mestre das combinações e descubra essas novas cores para avançarmos em nossa jornada!";
     }
 
     if (intro) intro.style.display = 'flex'; 

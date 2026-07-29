@@ -287,10 +287,28 @@ window.addEventListener('resize', ajustarAlturaMobile);
     }
 
     function backToPhase1() {
-        document.getElementById('phase2').classList.remove('active-phase');
-        document.getElementById('phase1').style.display = 'flex';
-        document.getElementById('phase1').classList.add('active-phase');
+    const phase1 = document.getElementById('phase1');
+    const phase2 = document.getElementById('phase2');
+    
+    if (phase1 && phase2) {
+        phase2.classList.remove('active-phase');
+        phase1.style.display = 'flex';
+        phase1.classList.add('active-phase');
+        
+        // Força o ajuste visual das alturas no mobile ao voltar
+        window.dispatchEvent(new Event('resize'));
     }
+}
+
+function backToMap() {
+    // Caso o jogo esteja dentro de um Iframe em outra página
+    if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ action: 'goToMap' }, '*');
+    } else {
+        // Altere 'mapa.html' para o link real da sua página de mapa
+        window.location.href = 'index.html?phase=3'; 
+    }
+}
 
     function resetPhase2() {
         paintedParts2.clear();

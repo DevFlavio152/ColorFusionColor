@@ -173,14 +173,55 @@
     }
     .btn-reset:not(:disabled):hover { background: transparent; color: var(--danger); transform: none; box-shadow: none; }
     
+    /* =========================================
+   BOTÃO DE NAVEGAÇÃO / VOLTAR (GLASSMORPHISM)
+========================================= */
+.btn-nav-back {
+    position: absolute; 
+    top: 20px; 
+    left: 20px;
+    background: rgba(255, 255, 255, 0.12); 
+    color: var(--text-light);
+    border: 1px solid rgba(255, 255, 255, 0.25); 
+    padding: 10px 20px; 
+    border-radius: 30px;
+    cursor: pointer; 
+    font-size: 0.9rem; 
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+    z-index: 100; 
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    user-select: none;
+}
+
+.btn-nav-back:hover { 
+    background: rgba(255, 255, 255, 0.25); 
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.btn-nav-back:active {
+    transform: translateY(0) scale(0.96);
+}
+
+/* Ajuste Fino para Mobile */
+@media (max-width: 768px) {
     .btn-nav-back {
-        position: absolute; top: 20px; left: 20px;
-        background: rgba(255, 255, 255, 0.1); color: var(--text-light);
-        border: 1px solid rgba(255, 255, 255, 0.2); padding: 10px 20px; border-radius: 30px;
-        cursor: pointer; font-size: 0.8rem; font-weight: bold;
-        transition: 0.3s; z-index: 10; backdrop-filter: blur(5px);
+        top: 12px;
+        left: 12px;
+        padding: 8px 14px;
+        font-size: 0.8rem;
+        background: rgba(30, 41, 59, 0.7); /* Fundo um pouco mais escuro para destaque */
+        border-color: rgba(255, 255, 255, 0.15);
     }
-    .btn-nav-back:hover { background: rgba(255, 255, 255, 0.2); border-color: #fff; }
+}
 
     /* ESTILOS TELA CHEIA E DIVISOR */
     .divider { 
@@ -389,13 +430,13 @@
 .modal-title.huge { font-size: 3rem; } /* Aumentado de 2.2rem */
 
 .modal-text {
-    color: #bbb;
+    color: #111;
     line-height: 1.7;
     margin: 0;
     font-size: 1.15rem; /* Aumentado de 0.95rem */
     text-align: left;
 }
-.modal-text.center { text-align: center; font-size: 1.25rem; } /* Aumentado */
+.modal-text.center { text-align: center; font-size: 1.25rem; color:#111 } /* Aumentado */
 .modal-text.large { font-size: 1.35rem; } /* Aumentado */
 
 /* Cores de Texto */

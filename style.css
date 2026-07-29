@@ -528,13 +528,13 @@ body {
     border-radius: 20px;
     padding: 25px;
     width: 370px;
-    height: 305px;
+    height: 390px;
     z-index: 3; /* Fica acima do personagem na base */
     box-shadow: 0 15px 30px rgba(0,0,0,0.4);
     
     box-sizing: border-box;
     position: relative;
-  top: -250px;
+  top: -345px;
   
     
 }
@@ -569,11 +569,38 @@ body {
     transition: all 0.2s;
     width: 111px;
     height: 39px;
-    margin-top: 0;
+    margin-top: -25px;
     
 }
 
 .btn-dialogue-next:hover {
     background: #1a252f;
     transform: scale(1.05);
+}
+
+/* Botão Voltar dentro das fases do index.html */
+#game-screen .btn-nav-back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 150px;
+    height: 60px;
+    background: #2c3e50;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    z-index: 100;
+    transition: all 0.2s ease;
+}
+
+#game-screen .btn-nav-back:hover {
+    background: #34495e;
+    transform: translateY(-2px);
 }

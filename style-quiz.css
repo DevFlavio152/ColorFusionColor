@@ -136,7 +136,7 @@ body {
 /* --- SISTEMA DE CRÉDITOS ANIMADOS --- */
 
 .creditos-viewport {
-    height: 280px; /* Altura da janela de visualização */
+    height: 300px; /* Levemente ampliado para melhor leitura */
     overflow: hidden;
     position: relative;
     background: #f8fafc;
@@ -148,49 +148,58 @@ body {
 .creditos-scroll {
     position: absolute;
     width: 100%;
-    /* A animação 'subirCreditos' dura 15 segundos e repete para sempre */
-    animation: subirCreditos 15s linear infinite;
+    /* Tempo ajustado para 22s devido ao novo volume de texto */
+    animation: subirCreditos 22s linear infinite;
     padding-top: 20px;
 }
 
 @keyframes subirCreditos {
     0% {
-        transform: translateY(280px); /* Começa lá embaixo, fora da vista */
+        transform: translateY(300px);
     }
     100% {
-        transform: translateY(-100%); /* Sobe até o final do conteúdo sumir lá em cima */
+        transform: translateY(-100%);
     }
 }
 
 .credito-secao {
-    margin-bottom: 50px; /* Espaço entre cada bloco de informação */
+    margin-bottom: 40px;
     text-align: center;
-    
+    padding: 0 15px;
 }
 
 .label-credito {
-    font-size: 0.65rem; /* Letras bem menores como você pediu */
+    font-size: 0.7rem;
     color: var(--gold);
     font-weight: 800;
-    letter-spacing: 2px;
-    margin-bottom: 8px;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
     text-transform: uppercase;
 }
 
 .nome-credito {
-    font-size: 0.85rem; /* Nome um pouco maior que a label, mas ainda pequeno */
+    font-size: 0.88rem;
     color: var(--text-main);
-    font-weight: 600;
-    margin: 4px 0;
+    font-weight: 700;
+    margin: 6px 0 2px 0;
+}
+
+/* Novo estilo para os cargos institucionais */
+.cargo-credito {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    font-weight: 500;
+    margin: 0 0 10px 0;
+    line-height: 1.3;
 }
 
 .imagem-produtora {
-    width: 70px;
-    height: 70px;
-    margin: 10px 10px; /* Mudei aqui para dar um espacinho entre elas */
+    width: 100px;
+    height: 100px;
+    margin: 10px 8px;
     background: #e2e8f0;
     border-radius: 12px;
-    display: inline-flex; /* O segredo está aqui: mudou de 'flex' para 'inline-flex' */
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     position: relative;
@@ -206,12 +215,13 @@ body {
 }
 
 .placeholder-img {
-    font-size: 0.5rem;
+    font-size: 0.55rem;
     color: #94a3b8;
     z-index: 1;
+    font-weight: bold;
 }
 
-/* Pausa a animação se o usuário passar o mouse (opcional, mas legal para ler) */
+/* Pausa a animação se passar o mouse ou segurar na tela */
 .creditos-viewport:hover .creditos-scroll {
     animation-play-state: paused;
 }

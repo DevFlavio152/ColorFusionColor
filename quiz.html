@@ -42,48 +42,78 @@
             <button class="btn btn-gold" onclick="mostrarCreditos()" style="width: 100%;">VER CRÉDITOS</button>
         </div>
 
+            <!-- TELA DE CRÉDITOS -->
         <div id="tela-creditos" class="card-modal" style="display:none; overflow: hidden;">
-    <h2 style="color:var(--text-main); margin-bottom: 10px;">Créditos:</h2>
-    
-    <div class="creditos-viewport">
-        <div class="creditos-scroll">
+            <h2 style="color:var(--text-main); margin-bottom: 10px;">Créditos</h2>
             
+            <div class="creditos-viewport">
+                <div class="creditos-scroll">
+                    
+                    <!-- GOVERNO DO ESTADO -->
+                    <div class="credito-secao">
+                        <p class="label-credito">GOVERNO DO ESTADO DE ALAGOAS</p>
+                        <p class="nome-credito">Paulo Suruagy do Amaral Dantas</p>
+                        <p class="cargo-credito">Governador do Estado de Alagoas</p>
+                    </div>
+
+                    <!-- SEDUC -->
+                    <div class="credito-secao">
+                        <p class="label-credito">SECRETARIA DE ESTADO DA EDUCAÇÃO</p>
+                        
+                        <p class="nome-credito">Roseane Ferreira Vasconcelos</p>
+                        <p class="cargo-credito">Secretária de Estado da Educação</p>
+
+                        <p class="nome-credito">Sueleide Barbosa Duarte</p>
+                        <p class="cargo-credito">Secretária Executiva de Desenvolvimento da Educação e Cooperação com os Municípios</p>
+
+                        <p class="nome-credito">Ricardo Lisboa Martins</p>
+                        <p class="cargo-credito">Superintendente de Desenvolvimento do Ensino Médio e Políticas Educacionais</p>
+
+                        <p class="nome-credito">Andrea Ferreira da Silva Maciel</p>
+                        <p class="cargo-credito">Gerente Especial de Inovação e Tecnologia na Educação</p>
+                    </div>
+
+                    <!-- ELABORAÇÃO E REVISÃO -->
+                    <div class="credito-secao">
+                        <p class="label-credito">ELABORAÇÃO E REVISÃO</p>
+                        <p class="nome-credito">Juliana Fernanda Amorim Sarmento</p>
+                        <p class="nome-credito">Flávio Miguel Guilherme dos Santos</p>
+                    </div>
+
+                    <!-- DIAGRAMAÇÃO E DESENVOLVIMENTO -->
+                    <div class="credito-secao">
+                        <p class="label-credito">DIAGRAMAÇÃO E DESENVOLVIMENTO</p>
+                        <p class="nome-credito">Flávio Miguel Guilherme dos Santos</p>
+                    </div>
+
+                    <!-- PRODUÇÃO / LOGOS -->
+                    <div class="credito-secao">
+                        <p class="label-credito">REALIZAÇÃO</p>
+                        <div class="imagem-produtora">
+                            <img src="./Assets/semfundobrasao.png" alt="SEDUC" onerror="this.style.opacity='0'">
+                            <span class="placeholder-img"></span>
+                        </div>
+                        <div class="imagem-produtora">
+                            <img src="./Assets/Logo RIEH.png" alt="RIEH" onerror="this.style.opacity='0'">
+                            <span class="placeholder-img"></span>
+                        </div>
+
+                        <div class="imagem-produtora">
+                            <img src="./Assets/escolaweblogo.png" alt="RIEH" onerror="this.style.opacity='0'">
+                            <span class="placeholder-img"></span>
+                        </div>
+
+                        <div class="imagem-produtora">
+                            <img src="./Assets/logocecite.png" alt="RIEH" onerror="this.style.opacity='0'">
+                            <span class="placeholder-img"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
             
-
-            <div class="credito-secao">
-                <p class="label-credito">GERENCIA:</p>
-                <p class="nome-credito">SEDECOM</p>
-                <p class="nome-credito">SUDEMPE</p>
-                <p class="nome-credito">GEITEDU</p>
-                <p class="label-credito">Desenvolvedor:</p>
-                <p class="nome-credito">Flavio Miguel Guilherme dos Santos</p>
-            </div>
-
-            <div class="credito-secao">
-                <p class="label-credito">COLABORADORES:</p>
-                <p class="nome-credito">Andrea Marciel</p>
-                <p class="nome-credito">Juliana Cecite</p>
-                <p class="nome-credito">Douglas Victor Santos Coelho</p>
-            </div>
-
-            <div class="credito-secao">
-                <p class="label-credito">PRODUZIDO POR:</p>
-                <div class="imagem-produtora">
-                    <img src="./Assets/logoseduc.png" alt="Logo" onerror="this.style.opacity='0'">
-                    <span class="placeholder-img">SUA LOGO</span>
-                </div>
-                <div class="imagem-produtora">
-                    <img src="./Assets/Logo RIEH.png" alt="Logo" onerror="this.style.opacity='0'">
-                    <span class="placeholder-img">SUA LOGOdois</span>
-                </div>
-            </div>
-
-
+            <button class="btn btn-outline" onclick="window.location.href='index.html'" style="margin-top: 15px; width: 100%;">VOLTAR AO MENU</button>
         </div>
-    </div>
-    
-    <button class="btn btn-outline" onclick="window.location.href='index.html'" style="margin-top: 15px; width: 100%;">VOLTAR AO MENU</button>
-</div>
 
     </div>
 
