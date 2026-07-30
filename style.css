@@ -604,3 +604,59 @@ body {
     background: #34495e;
     transform: translateY(-2px);
 }
+
+/* =========================================
+   CABEÇALHO MESTRE DAS CORES (FASE 2 E 3)
+========================================= */
+.mestre-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.mestre-avatar {
+    width: 120px; /* Um pouco menor para caber bem na tela de jogo */
+    height: 120px;
+    object-fit: contain;
+    background: #f8fafc;
+    border-radius: 50%;
+    border: 2px solid #d4af37; /* Dourado */
+    padding: 4px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+}
+
+.mestre-avatar:hover {
+    transform: scale(1.05);
+}
+
+.mestre-tag {
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: #d4af37;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin-top: 4px;
+}
+
+.card-titulo {
+    color: #1a252f;
+    margin: 2px 0;
+    font-size: 1.25rem;
+    font-weight: 900;
+}
+
+.card-subtitulo {
+    color: #7f8c8d;
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Esconde o header antigo caso tenha sobrado em algum lugar */
+.header { display: none; }

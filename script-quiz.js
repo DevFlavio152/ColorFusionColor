@@ -29,12 +29,23 @@ let acertosTemaAtual = 0;
 let relatorioFinal = [];
 let acertosTotais = 0;
 
+// CONTROLE DE MÚSICA DE FUNDO DOS CRÉDITOS
+let musicaCreditos = null;
+
+function pararMusicaCreditos() {
+  if (musicaCreditos) {
+    musicaCreditos.pause();
+    musicaCreditos.currentTime = 0;
+  }
+}
+
 function mostrarTela(id) {
   document.querySelectorAll('.card-modal').forEach(el => el.style.display = 'none');
   document.getElementById(id).style.display = 'block';
 }
 
 function iniciarQuiz() {
+  pararMusicaCreditos(); // Garante que se estivesse nos créditos, a música pare ao reiniciar
   questaoAtual = 0;
   acertosTotais = 0;
   acertosTemaAtual = 0;
@@ -56,7 +67,10 @@ function mostrarQuestao() {
     const btn = document.createElement('button');
     btn.className = 'opcao-btn';
     btn.innerText = opcaoTexto;
-    btn.onclick = () => registrarResposta(index, q.correta, q.tema);
+    btn.onclick = () => {
+      if (typeof tocarSom === 'function') tocarSom('click');
+      registrarResposta(index, q.correta, q.tema);
+    };
     containerOpcoes.appendChild(btn);
   });
 }
@@ -84,12 +98,15 @@ function prepararFeedback() {
   titulo.innerText = `Análise: ${tema}`;
 
   if (acertosTemaAtual === 2) {
+    if (typeof tocarSom === 'function') tocarSom('acerto');
     texto.innerText = "Perfeito! Você dominou completamente este conceito. (2/2 Acertos)";
     texto.style.color = "var(--success)";
   } else if (acertosTemaAtual === 1) {
+    if (typeof tocarSom === 'function') tocarSom('acerto');
     texto.innerText = "Bom, mas pode melhorar. Revise a teoria deste conceito. (1/2 Acertos)";
     texto.style.color = "var(--gold)";
   } else {
+    if (typeof tocarSom === 'function') tocarSom('erro');
     texto.innerText = "Atenção necessária! Sua curadoria falhou neste tema. (0/2 Acertos)";
     texto.style.color = "var(--error)";
   }
@@ -98,6 +115,7 @@ function prepararFeedback() {
 }
 
 function proximaPergunta() {
+  if (typeof tocarSom === 'function') tocarSom('click');
   acertosTemaAtual = 0; 
   questaoAtual++;
 
@@ -130,5 +148,39 @@ function gerarPenteFino() {
 }
 
 function mostrarCreditos() {
-  mostrarTela('tela-creditos');
+    // 1. 🛑 PARAR A MÚSICA DE FUNDO DO QUIZ / PÁGINA
+    
+    // Se o seu script-audio.js tiver uma função de parar BGM, ele chama aqui:
+    if (typeof pararBGM === 'function') pararBGM();
+    if (typeof pausarBGM === 'function') pausarBGM();
+
+    // Se a música for uma tag <audio> no HTML, pausa todas:
+    document.querySelectorAll('audio').forEach(a => {
+        a.pause();
+        a.currentTime = 0;
+    });
+
+    // Se o script-audio.js usou uma variável global no window:
+    if (window.bgm) { window.bgm.pause(); window.bgm.currentTime = 0; }
+    if (window.audioBGM) { window.audioBGM.pause(); window.audioBGM.currentTime = 0; }
+    if (window.currentBGM) { window.currentBGM.pause(); window.currentBGM.currentTime = 0; }
+
+    // -------------------------------------------------------------
+
+    // 2. 🎵 TOCAR APENAS A MÚSICA DOS CRÉDITOS
+    pararMusicaCreditos(); // Reseta se já estava tocando
+  
+    const srcCreditos = (typeof sfxMap !== 'undefined' && sfxMap['creditos']) ? sfxMap['creditos'] : 'Audio/bgm-creditos.mp3';
+  
+    musicaCreditos = new Audio(srcCreditos);
+    musicaCreditos.loop = true;
+    musicaCreditos.play().catch(err => console.warn("Erro ao tocar música de créditos:", err));
+
+    mostrarTela('tela-creditos');
+}
+
+// Função para voltar para a fase de cores quente e fria
+function backToCores() {
+  pararMusicaCreditos(); // Para a música dos créditos ao sair da página
+  window.location.href = 'cores.html';
 }

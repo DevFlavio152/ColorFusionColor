@@ -64,37 +64,47 @@ window.addEventListener('resize', ajustarAlturaMobile);
     }
 
     function renderFullscreenColors() {
-        const grid = document.getElementById('grid-cores-fullscreen');
-        grid.innerHTML = '';
-        
-        listaCores.forEach(cor => {
-            const btn = document.createElement('div');
-            btn.className = 'color-btn-fullscreen';
-            btn.style.background = cor.hex;
-            btn.onclick = () => {
-                if (activeFullscreenPhase === 1) {
-                    applyColor1(cor.hex, cor.grupo);
-                } else {
-                    applyColor2(cor.hex, cor.grupo);
-                }
-                closeFullscreenColors(); // Fecha automaticamente após escolher a cor!
-            };
-            grid.appendChild(btn);
-        });
-    }
+    const grid = document.getElementById('grid-cores-fullscreen');
+    grid.innerHTML = '';
+    
+    listaCores.forEach(cor => {
+        const btn = document.createElement('div');
+        btn.className = 'color-btn-fullscreen';
+        btn.style.background = cor.hex;
+        btn.onclick = () => {
+            // 🔊 Se houver pétala selecionada, toca o som de pintar na hora!
+            if (selectedPart && typeof tocarSom === 'function') {
+                tocarSom('pintar');
+            }
+            if (activeFullscreenPhase === 1) {
+                applyColor1(cor.hex, cor.grupo);
+            } else {
+                applyColor2(cor.hex, cor.grupo);
+            }
+            closeFullscreenColors();
+        };
+        grid.appendChild(btn);
+    });
+}
 
     function renderizarCores(containerId, clickHandler) {
-        const grid = document.getElementById(containerId);
-        grid.innerHTML = '';
-        
-        listaCores.forEach(cor => {
-            const btn = document.createElement('div');
-            btn.className = 'color-btn';
-            btn.style.background = cor.hex;
-            btn.onclick = () => clickHandler(cor.hex, cor.grupo);
-            grid.appendChild(btn);
-        });
-    }
+    const grid = document.getElementById(containerId);
+    grid.innerHTML = '';
+    
+    listaCores.forEach(cor => {
+        const btn = document.createElement('div');
+        btn.className = 'color-btn';
+        btn.style.background = cor.hex;
+        btn.onclick = () => {
+            // 🔊 Se houver pétala selecionada, toca o som de pintar na hora!
+            if (selectedPart && typeof tocarSom === 'function') {
+                tocarSom('pintar');
+            }
+            clickHandler(cor.hex, cor.grupo);
+        };
+        grid.appendChild(btn);
+    });
+}
 
     function initPanZoom(containerId, svgId) {
         const container = document.getElementById(containerId);
@@ -178,6 +188,7 @@ window.addEventListener('resize', ajustarAlturaMobile);
             part.onclick = (e) => {
                 if(isPanningMap) return;
                 if(mandala1Finished) return;
+                tocarSom('click');
                 if(selectedPart) selectedPart.classList.remove('selected');
                 selectedPart = part;
                 part.classList.add('selected');
@@ -188,6 +199,7 @@ window.addEventListener('resize', ajustarAlturaMobile);
 
     function applyColor1(hex, grupo) {
         if(!selectedPart || mandala1Finished) return;
+        tocarSom('pintar'); // 👈 ADICIONE AQUI
         selectedPart.style.fill = hex;
         paintedParts1.set(selectedPart.id, grupo);
         checkCompletion1();
@@ -220,10 +232,12 @@ window.addEventListener('resize', ajustarAlturaMobile);
 
         if(erros.length === 0) {
             mandala1Finished = true;
+            tocarSom('acerto'); // 👈 ADICIONE AQUI (Passou da Etapa 1)
             if(selectedPart) selectedPart.classList.remove('selected');
             document.querySelector('#phase1 #canvas-mold-1').classList.add('success-state');
             document.getElementById('modal-success-1').style.display = 'flex';
         } else {
+            tocarSom('erro');
             document.getElementById('msg-box').innerHTML = `<span style='color:var(--danger)'>QUASE!</span><br>Sua base parece ser <b>${grupoBase}</b>, mas você usou peças de outras famílias.`;
             erros.forEach(el => el.classList.add('error-blink'));
             setTimeout(() => {
@@ -257,6 +271,7 @@ window.addEventListener('resize', ajustarAlturaMobile);
             part.onclick = () => {
                 if(isPanningMap) return; 
                 if(mandala2Finished) return;
+                tocarSom('click');
                 if(selectedPart) selectedPart.classList.remove('selected');
                 selectedPart = part;
                 part.classList.add('selected');
@@ -267,6 +282,7 @@ window.addEventListener('resize', ajustarAlturaMobile);
 
     function applyColor2(hex, grupo) {
         if(!selectedPart || mandala2Finished) return;
+        tocarSom('pintar'); // 👈 ADICIONE AQUI
         selectedPart.style.fill = hex;
         paintedParts2.set(selectedPart.id, grupo);
         
@@ -278,10 +294,12 @@ window.addEventListener('resize', ajustarAlturaMobile);
         const gruposUnicos = new Set(paintedParts2.values());
         if(gruposUnicos.size >= 3) {
             mandala2Finished = true;
+            tocarSom('vitoria'); // 👈 ADICIONE AQUI (Ganhou a Fase Toda!)
             if(selectedPart) selectedPart.classList.remove('selected');
             document.querySelector('#phase2 #canvas-mold-2').classList.add('success-state');
             document.getElementById('modal-victory-final').style.display = 'flex';
         } else {
+            tocarSom('erro');
             document.getElementById('msg-box-2').innerHTML = "<span style='color:var(--danger)'>POUCA VARIEDADE!</span><br>Use pelo menos 3 famílias de cores diferentes.";
         }
     }

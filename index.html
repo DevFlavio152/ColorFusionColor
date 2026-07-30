@@ -64,11 +64,14 @@
 <button id="btn-back-phase" class="btn-nav-back" onclick="goBackToPreviousPhase()" style="display: none;">
     <span>&#8592;</span> <span id="btn-back-text">Voltar</span>
 </button>
-            <div class="header">
-                <span class="emoji">🌈</span>
-                <h1>Enigma das Cores</h1>
+            <div class="mestre-header">
+                <img src="Assets/personadesenhando.png" alt="Mestre das Cores" class="mestre-avatar">
+                <div class="mestre-info">
+                    <span class="mestre-tag"></span>
+                    <h2 class="card-titulo">Enigma das Cores</h2>
+                    <h3 class="card-subtitulo" id="game-instruction">Misture as cores para prosseguir</h3>
+                </div>
             </div>
-            <p id="game-instruction" style="font-size: 0.8rem; color: #7f8c8d;">Misture as cores para encontrar as secundária</p>
             <div id="color-area"></div>
             <div class="wheel-container">
                 <div id="chromatic-wheel" class="wheel-base"></div>
@@ -113,6 +116,7 @@
 
     <script src="script.js"></script>
     <script src="script-debug.js"></script>
+    <script src="script-audio.js"></script>
     
 
       

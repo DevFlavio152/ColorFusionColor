@@ -196,3 +196,33 @@
   font-size: 0.9rem;
   font-weight: 500;
 }
+/* =========================================
+   BOTÃO VOLTAR PARA MANDALAS
+========================================= */
+.btn-nav-back {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: #2c3e50;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 1050; /* Garante que fique acima de tudo */
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.btn-nav-back:hover {
+    background: #d4af37; /* Fica dourado ao passar o mouse */
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(212, 175, 55, 0.3);
+    border-color: #d4af37;
+}

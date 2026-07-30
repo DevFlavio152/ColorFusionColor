@@ -225,3 +225,101 @@ body {
 .creditos-viewport:hover .creditos-scroll {
     animation-play-state: paused;
 }
+/* =========================================
+   BOTÃO VOLTAR PARA quente fria
+========================================= */
+.btn-nav-back {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: #2c3e50;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 1050; /* Garante que fique acima de tudo */
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.btn-nav-back:hover {
+    background: #d4af37; /* Fica dourado ao passar o mouse */
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(212, 175, 55, 0.3);
+    border-color: #d4af37;
+}
+
+/* =========================================
+   ESTILO DO MESTRE DAS CORES (CENTRALIZADO E RESPONSIVO)
+========================================= */
+.mestre-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+    border-bottom: 2px solid #f0f4f8;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.mestre-avatar {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    background: #f8fafc;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    padding: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease;
+}
+
+.mestre-avatar:hover {
+    transform: scale(1.05);
+}
+
+.mestre-tag {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin-top: 4px;
+}
+
+.card-titulo {
+    color: var(--text-main);
+    margin: 2px 0;
+    font-size: 1.35rem;
+    font-weight: 800;
+}
+
+.card-subtitulo {
+    color: var(--text-light);
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Ajustes Responsivos para Dispositivos Móveis */
+@media (max-width: 480px) {
+    .mestre-avatar {
+        width: 95px;
+        height: 95px;
+    }
+    .card-titulo {
+        font-size: 1.15rem;
+    }
+    .card-subtitulo {
+        font-size: 0.82rem;
+    }
+}

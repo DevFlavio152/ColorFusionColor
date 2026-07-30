@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="style-faseum.css">
 </head>
 <body>
-    
+    <!-- Cole dentro do container principal do jogo -->
+<button class="btn-nav-back" onclick="backToMap()">
+    <span>&#8592;</span> Voltar ao Mapa
+</button>
     <div id="intro-modal" class="modal-overlay">
         <div class="modal-content">
             <img src="Assets/saudaçoesdois.png" alt="Mestre das Cores" class="avatar-mestre" onerror="this.style.display='none'">
@@ -42,9 +45,13 @@
     </div>
 
     <div class="fase1-wrapper">
-        <div class="header">
-            <h1>Enigma das Cores</h1>
-            <p>Encontre as 3 Cores Primárias</p>
+        <div class="mestre-header">
+            <img src="Assets/saudaçoesdois.png" alt="Mestre das Cores" class="mestre-avatar">
+            <div class="mestre-info">
+                <span class="mestre-tag"></span>
+                <h2 class="card-titulo">Enigma das Cores</h2>
+                <h3 class="card-subtitulo">Encontre as 3 Cores Primárias</h3>
+            </div>
         </div>
 
         <div class="game-area">
@@ -88,5 +95,6 @@
 
     <script src="script-faseum.js"></script>
     <script src="script-debug.js"></script>
+    <script src="script-audio.js"></script>
 </body>
 </html>

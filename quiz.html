@@ -3,18 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Enigma das Cores</title>
+    <title>Enigma das Cores - Exame Final</title>
     
     <link rel="stylesheet" href="style-quiz.css">
 </head>
 <body>
+
+    <button class="btn-nav-back" onclick="backToCores()">
+        <span>&#8592;</span> Voltar
+    </button>
+
     <div id="app">
         <div id="tela-intro" class="card-modal">
-            <h2 style="color:var(--text-main); margin-bottom: 5px;">O Enigma das Cores</h2>
-            <h3 style="color:var(--gold); margin-top: 0;">Exercicio</h3>
-            <p style="color: var(--text-light); margin-bottom: 25px; line-height: 1.5;">
-                Você calibrou seu olhar e dominou o círculo cromático. Agora, prove seu conhecimento nesta avaliação completa de 14 questões sobre a Teoria das Cores.
+            <div class="mestre-header">
+                <img src="Assets/personagemquiz.png" alt="Mestre das Cores" class="mestre-avatar">
+                <div class="mestre-info">
+                    <span class="mestre-tag">Mestre das Cores</span>
+                    <h2 class="card-titulo">O Enigma das Cores</h2>
+                    <h3 class="card-subtitulo">Exame Final de Curadoria Visual</h3>
+                </div>
+            </div>
+
+            <p style="color: var(--text-light); margin: 20px 0; font-size: 0.95rem; line-height: 1.5;">
+                Você calibrou seu olhar e dominou o círculo cromático. Agora, prove seu conhecimento nesta avaliação completa de <strong>14 questões</strong> sobre a Teoria das Cores.
             </p>
+            
             <button class="btn btn-gold" onclick="iniciarQuiz()">INICIAR AVALIAÇÃO</button>
         </div>
 
@@ -32,7 +45,7 @@
             <div class="dida-container">
                 <p id="feedback-texto" style="margin: 0; font-weight: 500; text-align: center; font-size: 1.1rem;"></p>
             </div>
-            <button class="btn btn-gold" onclick="proximaPergunta()">VER RELATÓRIO</button>
+            <button class="btn btn-gold" onclick="proximaPergunta()">PROSSEGUIR</button>
         </div>
 
         <div id="tela-resultado" class="card-modal" style="display:none;">
@@ -42,21 +55,18 @@
             <button class="btn btn-gold" onclick="mostrarCreditos()" style="width: 100%;">VER CRÉDITOS</button>
         </div>
 
-            <!-- TELA DE CRÉDITOS -->
         <div id="tela-creditos" class="card-modal" style="display:none; overflow: hidden;">
             <h2 style="color:var(--text-main); margin-bottom: 10px;">Créditos</h2>
             
             <div class="creditos-viewport">
                 <div class="creditos-scroll">
                     
-                    <!-- GOVERNO DO ESTADO -->
                     <div class="credito-secao">
                         <p class="label-credito">GOVERNO DO ESTADO DE ALAGOAS</p>
                         <p class="nome-credito">Paulo Suruagy do Amaral Dantas</p>
                         <p class="cargo-credito">Governador do Estado de Alagoas</p>
                     </div>
 
-                    <!-- SEDUC -->
                     <div class="credito-secao">
                         <p class="label-credito">SECRETARIA DE ESTADO DA EDUCAÇÃO</p>
                         
@@ -73,20 +83,17 @@
                         <p class="cargo-credito">Gerente Especial de Inovação e Tecnologia na Educação</p>
                     </div>
 
-                    <!-- ELABORAÇÃO E REVISÃO -->
                     <div class="credito-secao">
                         <p class="label-credito">ELABORAÇÃO E REVISÃO</p>
                         <p class="nome-credito">Juliana Fernanda Amorim Sarmento</p>
                         <p class="nome-credito">Flávio Miguel Guilherme dos Santos</p>
                     </div>
 
-                    <!-- DIAGRAMAÇÃO E DESENVOLVIMENTO -->
                     <div class="credito-secao">
                         <p class="label-credito">DIAGRAMAÇÃO E DESENVOLVIMENTO</p>
                         <p class="nome-credito">Flávio Miguel Guilherme dos Santos</p>
                     </div>
 
-                    <!-- PRODUÇÃO / LOGOS -->
                     <div class="credito-secao">
                         <p class="label-credito">REALIZAÇÃO</p>
                         <div class="imagem-produtora">
@@ -119,5 +126,6 @@
 
     <script src="script-quiz.js"></script>
     <script src="script-debug.js"></script>
+    <script src="script-audio.js"></script>
 </body>
 </html>

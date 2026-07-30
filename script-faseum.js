@@ -58,6 +58,7 @@ function gerarCartas() {
 }
 
 function virarCarta(index, cor) {
+    tocarSom('carta');
     const cardElement = document.getElementById(`card-${index}`);
     
     // Evita clicar em cartas já viradas ou desativadas
@@ -83,6 +84,7 @@ function abrirPergunta(cor) {
 }
 
 function responderPergunta(respostaDoJogadorSim) {
+    
     document.getElementById('question-modal').style.display = 'none';
     const cardElement = document.getElementById(`card-${indexCartaAtual}`);
     
@@ -93,6 +95,7 @@ function responderPergunta(respostaDoJogadorSim) {
 
     // LÓGICA DO JOGO
     if (respostaDoJogadorSim === true && cartaAtualSelecionada.ePrimaria === true) {
+        tocarSom('acerto');
         // Disse SIM para uma Primária = SUCESSO!
         acertou = true;
         titulo = "Exato!";
@@ -104,6 +107,7 @@ function responderPergunta(respostaDoJogadorSim) {
         primariasEncontradas++;
 
     } else if (respostaDoJogadorSim === false && cartaAtualSelecionada.ePrimaria === false) {
+        tocarSom('acerto');
         // Disse NÃO para uma Secundária = SUCESSO (Não caiu na pegadinha)
         acertou = true;
         titulo = "Boa percepção!";
@@ -113,6 +117,7 @@ function responderPergunta(respostaDoJogadorSim) {
         cardElement.classList.add('disabled'); 
 
     } else if (respostaDoJogadorSim === true && cartaAtualSelecionada.ePrimaria === false) {
+        tocarSom('erro');
         // Disse SIM para uma Secundária = ERRO!
         acertou = false;
         titulo = "Cuidado com a pegadinha!";
@@ -160,6 +165,7 @@ function exibirFeedback(titulo, texto, cor) {
         
         // Se encontrou as 3, chama a vitória
         if (primariasEncontradas === 3) {
+            tocarSom('vitoria');
             document.getElementById('victory-modal').style.display = 'flex';
         }
     }, 2500);
@@ -173,4 +179,10 @@ function avancarParaFase2() {
 
     sessionStorage.setItem('voltarParaOMapa', 'true');
     window.location.href = "index.html?map=true";
+}
+
+// Função para voltar da Fase 1 para o Mapa Principal
+function backToMap() {
+    // Redireciona para o index.html com o parâmetro map=true para abrir o mapa direto
+    window.location.href = 'index.html?map=true';
 }

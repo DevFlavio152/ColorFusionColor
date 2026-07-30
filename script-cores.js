@@ -45,8 +45,11 @@ function renderizarGrid() {
         const div = document.createElement('div');
         div.className = 'item-grid';
         div.innerHTML = `<img src="${img.url}">`;
-        
         div.onclick = () => {
+            // 🔊 SOM DE CLIQUE AO SELECIONAR A IMAGEM
+            if (typeof tocarSom === 'function') {
+                tocarSom('click');
+            }
             if (selecionados.has(img.id)) {
                 selecionados.delete(img.id);
                 div.classList.remove('selected');
@@ -76,6 +79,10 @@ function renderizarGrid() {
 }
 
 function verificarSelecao() {
+    // Função específica para o som de clique normal
+function tocarClique() {
+    tocarSom('click');
+}
     const objetivo = (etapaAtual === 1) ? 'quente' : 'frio';
     const corretosNoPool = imagensFull.filter(img => img.temp === objetivo).map(img => img.id);
     const selecionadosArray = Array.from(selecionados);
@@ -86,6 +93,14 @@ function verificarSelecao() {
     if (acertoTotal) {
         feedback.style.color = '#28a745';
         feedback.innerText = 'Perfeito! Analisando próxima etapa...';
+        // 🔊 TOCA O SOM DE ACERTO OU DE VITÓRIA FINAL
+        if (typeof tocarSom === 'function') {
+            if (etapaAtual === 1) {
+                tocarSom('acerto'); // Passou da primeira etapa
+            } else {
+                tocarSom('vitoria'); // Completou o desafio inteiro!
+            }
+        }
         
         setTimeout(() => {
             if (etapaAtual === 1) {
@@ -97,6 +112,10 @@ function verificarSelecao() {
             }
         }, 1200);
     } else {
+        // 🔊 TOCA O SOM DE ERRO
+        if (typeof tocarSom === 'function') {
+            tocarSom('erro');
+        }
         feedback.style.color = '#ff4444';
         feedback.innerText = 'Sua análise falhou. Tente novamente.';
     }
@@ -112,4 +131,9 @@ function reiniciarTudo() {
 function voltarAoMapaFinal() {
     // Em vez de voltar ao menu, agora o jogador vai para a Grande Final: O QUIZ!
     window.location.href = "quiz.html";
+}
+// Função para voltar para a fase de mandala
+function backToMandalas() {
+    
+    window.location.href = 'mandalas.html';
 }

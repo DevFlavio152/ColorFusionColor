@@ -25,6 +25,9 @@ body {
     display: flex;
     flex-direction: column;
     gap: 30px;
+
+    /* ADICIONE APENAS ESTA LINHA ABAIXO */
+    margin-top: 40px;
 }
 
 .header { text-align: center; }
@@ -165,13 +168,41 @@ body {
 
 /* Deixa responsivo para caber bonitinho na tela do celular */
 @media (max-width: 650px) {
+    /* Diminui o espaçamento geral da caixa branca */
+    .fase1-wrapper {
+        padding: 20px 15px;
+        gap: 20px;
+    }
+    
+    /* Diminui o título */
+    .header h1 {
+        font-size: 1.6rem;
+    }
+
+    /* Reduz o Círculo Cromático para não empurrar as cartas pra fora */
+    .beautiful-wheel {
+        width: 180px; 
+        height: 180px;
+    }
+    .wheel-center-hole {
+        width: 65px;
+        height: 65px;
+    }
+
+    /* Ajusta as cartas */
     .cards-grid {
         grid-template-columns: repeat(3, 1fr); /* 3 colunas no celular */
-        gap: 10px;
+        gap: 8px;
     }
     .card {
-        width: 70px;
-        height: 90px;
+        width: 65px;
+        height: 85px;
+    }
+
+    /* Diminui a foto do Mestre no modal */
+    .avatar-mestre {
+        width: 100px;
+        height: 100px;
     }
 }
 
@@ -191,6 +222,10 @@ body {
     text-align: center; max-width: 450px; width: 90%;
     box-shadow: 0 15px 40px rgba(0,0,0,0.2);
     animation: popIn 0.3s ease;
+
+    /* ADICIONE APENAS ESTAS DUAS LINHAS ABAIXO */
+    max-height: 85vh; 
+    overflow-y: auto
 }
 
 @keyframes popIn {
@@ -235,4 +270,98 @@ body {
 @keyframes slideDown {
     0% { transform: translateY(-50px); opacity: 0; }
     100% { transform: translateY(0); opacity: 1; }
+}
+
+.btn-nav-back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: #2c3e50;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    z-index: 100;
+    transition: all 0.2s ease;
+}
+
+.btn-nav-back:hover {
+    background: #34495e;
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   CABEÇALHO DO MESTRE DAS CORES (FASE 1)
+========================================= */
+.mestre-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 6px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.mestre-avatar {
+    width: 95px;
+    height: 95px;
+    object-fit: contain;
+    background: #f8fafc;
+    border-radius: 50%;
+    /* Borda azul combinando com a fase das Cores Primárias */
+    border: 3px solid #3498db; 
+    padding: 4px;
+    box-shadow: 0 4px 10px rgba(52, 152, 219, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.mestre-avatar:hover {
+    transform: scale(1.05);
+}
+
+.mestre-tag {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #3498db;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin-top: 4px;
+}
+
+.card-titulo {
+    color: #1a252f;
+    margin: 2px 0;
+    font-size: 1.4rem;
+    font-weight: 900;
+}
+
+.card-subtitulo {
+    color: #7f8c8d;
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+/* Opcional: Esconder a classe header antiga se ela ainda estiver no código */
+.header { display: none; }
+
+/* =========================================
+   MELHORIA DE COR NO FUNDO DA PÁGINA
+========================================= */
+body {
+    /* Troca a cor sólida por um gradiente azul bem suave e moderno */
+    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+}
+
+.fase1-wrapper {
+    /* Adiciona uma borda superior colorida para dar vida à caixa branca */
+    border-top: 8px solid #3498db;
 }
