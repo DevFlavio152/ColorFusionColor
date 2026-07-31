@@ -18,17 +18,17 @@
             <div class="mestre-header">
                 <img src="Assets/personagemquiz.png" alt="Mestre das Cores" class="mestre-avatar">
                 <div class="mestre-info">
-                    <span class="mestre-tag">Mestre das Cores</span>
-                    <h2 class="card-titulo">O Enigma das Cores</h2>
-                    <h3 class="card-subtitulo">Exame Final de Curadoria Visual</h3>
+                    <span class="mestre-tag"></span>
+                    <h2 class="card-titulo">FASE FINAL</h2>
+                    <h3 class="card-subtitulo">Bem-vindo ao quiz de Enigma das Cores</h3>
                 </div>
             </div>
 
             <p style="color: var(--text-light); margin: 20px 0; font-size: 0.95rem; line-height: 1.5;">
-                Você calibrou seu olhar e dominou o círculo cromático. Agora, prove seu conhecimento nesta avaliação completa de <strong>14 questões</strong> sobre a Teoria das Cores.
+                Você calibrou seu olhar e dominou o círculo cromático. Agora, prove seu conhecimento neste questionário de <strong>14 questões</strong> sobre a Teoria das Cores.
             </p>
             
-            <button class="btn btn-gold" onclick="iniciarQuiz()">INICIAR AVALIAÇÃO</button>
+            <button class="btn btn-gold" onclick="iniciarQuiz()">INICIAR</button>
         </div>
 
         <div id="tela-quiz" class="card-modal" style="display:none;">
@@ -52,11 +52,15 @@
             <h2 style="color:var(--text-main); margin-bottom: 5px;">Relatório de Desempenho</h2>
             <h1 id="nota-total" style="color:var(--gold); margin: 10px 0;">0/14</h1>
             <div id="pente-fino-container" style="text-align: left; margin: 20px 0;"></div>
-            <button class="btn btn-gold" onclick="mostrarCreditos()" style="width: 100%;">VER CRÉDITOS</button>
+            <button class="btn btn-gold" onclick="mostrarCreditos()" style="width: 100%;">FIM DE JOGO</button>
         </div>
 
         <div id="tela-creditos" class="card-modal" style="display:none; overflow: hidden;">
-            <h2 style="color:var(--text-main); margin-bottom: 10px;">Créditos</h2>
+            <!-- 🟢 PERFIL DO MESTRE DAS CORES -->
+    <div class="mestre-header" style="border-bottom: none; padding-bottom: 0; margin-bottom: 5px;">
+        <img src="Assets/personagemjoinha.png" alt="Mestre das Cores" class="mestre-avatar" style="width: 130px; height: 130px;">
+    </div>
+            <h2 style="color:var(--text-main); margin-bottom: 10px;">OBRIGADO POR JOGAR!</h2>
             
             <div class="creditos-viewport">
                 <div class="creditos-scroll">

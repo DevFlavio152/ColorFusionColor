@@ -114,30 +114,7 @@
         <p style="color: #cbd5e1; font-size: 0.95rem; font-family: 'Inter', sans-serif;">Preparando o estúdio de Mandalas</p>
     </div>
 
-    <!-- 🎯 SCRIPT DE LIMPEZA E INICIALIZAÇÃO CONTROLADA -->
-    <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const phaseParam = urlParams.get('phase');
-
-            // Se o usuário entrou no site direto (SEM o parâmetro ?phase= na URL)
-            if (!phaseParam) {
-                // Limpa vestígios de memória antiga do navegador
-                localStorage.removeItem('faseAtual');
-                localStorage.removeItem('unlockedPhase');
-                
-                // Força o mapa a selecionar a Fase 1
-                if (typeof selectPhase === 'function') {
-                    selectPhase(1);
-                }
-            } else {
-                // Se ele veio redirecionado de outra página (ex: mandalas.html com ?phase=3)
-                if (typeof selectPhase === 'function') {
-                    selectPhase(parseInt(phaseParam));
-                }
-            }
-        });
-    </script>
+    
 
     <script src="script.js"></script>
     <script src="script-debug.js"></script>

@@ -4,11 +4,11 @@
 
 const AudioManager = {
     bgmActual: null,
-    bgmVolume: 0.35,  // Volume da música (35% para não abafar o jogo)
+    bgmVolume: 0.35,  // Volume da música (35%)
     sfxVolume: 0.7,   // Volume dos efeitos sonoros (70%)
     audioDesbloqueado: false,
 
-    // Mapeamento exato das Músicas de Fundo (BGM) para cada página HTML
+    // Mapeamento das Músicas de Fundo (BGM)
     bgmMap: {
         'index.html': 'Audio/bgm-mapa.mp3',
         'mapa.html': 'Audio/bgm-mapa.mp3',
@@ -23,7 +23,7 @@ const AudioManager = {
         'quiz.html': 'Audio/bgm-quiz.mp3'
     },
 
-    // Mapeamento exato dos Efeitos Sonoros (SFX) da sua pasta
+    // Mapeamento dos Efeitos Sonoros (SFX)
     sfxMap: {
         'click': 'Audio/sfx-click.wav',
         'carta': 'Audio/sfx-carta.mp3',
@@ -31,10 +31,9 @@ const AudioManager = {
         'erro': 'Audio/sfx-erro.wav',
         'vitoria': 'Audio/sfx-vitoria.wav',
         'pintar': 'Audio/sfx-pintar.mp3',
-        'creditos': 'Audio/bgm-creditos.mp3' // 👈 ADICIONE ESTA LINHA
+        'creditos': 'Audio/bgm-creditos.mp3'
     },
 
-    // Inicia a música de acordo com a página atual
     init() {
         const pathAtual = window.location.pathname.split('/').pop().toLowerCase() || 'index.html';
         const musicaParaPagina = this.bgmMap[pathAtual] || 'Audio/bgm-mapa.mp3';
@@ -43,7 +42,6 @@ const AudioManager = {
         this.bgmActual.loop = true;
         this.bgmActual.volume = this.bgmVolume;
 
-        // Tentar tocar quando o usuário interagir pela 1ª vez (Regra de Autoplay dos Navegadores)
         const desativarBloqueio = () => {
             if (!this.audioDesbloqueado) {
                 this.bgmActual.play().catch(() => {});
@@ -54,15 +52,30 @@ const AudioManager = {
         window.addEventListener('click', desativarBloqueio, { once: true });
         window.addEventListener('keydown', desativarBloqueio, { once: true });
 
-        // Toca automaticamente cliques em botões genéricos
         document.addEventListener('click', (e) => {
             if (e.target.closest('button') || e.target.closest('.btn-primary') || e.target.closest('.card')) {
-                // Se for carta, a fase pode chamar 'carta' manualmente
                 if (!e.target.closest('.card')) {
                     this.playSFX('click');
                 }
             }
         });
+    },
+
+    // 🛑 Para a música de fundo atual completamente
+    pararBGM() {
+        if (this.bgmActual) {
+            this.bgmActual.pause();
+            this.bgmActual.currentTime = 0;
+        }
+    },
+
+    // 🔄 Para a BGM atual e inicia a nova sem sobreposição
+    trocarBGM(caminhoAudio) {
+        this.pararBGM();
+        this.bgmActual = new Audio(caminhoAudio);
+        this.bgmActual.loop = true;
+        this.bgmActual.volume = this.bgmVolume;
+        this.bgmActual.play().catch(err => console.log('Aguardando interação para áudio:', err));
     },
 
     // Função para tocar qualquer efeito sonoro
@@ -76,12 +89,19 @@ const AudioManager = {
     }
 };
 
-// Inicializa automaticamente quando a página carregar
 document.addEventListener('DOMContentLoaded', () => {
     AudioManager.init();
 });
 
-// Atalho global facilitado para usar nas fases
+// --- ATALHOS GLOBAIS ---
 function tocarSom(nomeSom) {
     AudioManager.playSFX(nomeSom);
+}
+
+function pararBGM() {
+    AudioManager.pararBGM();
+}
+
+function trocarBGM(caminhoAudio) {
+    AudioManager.trocarBGM(caminhoAudio);
 }

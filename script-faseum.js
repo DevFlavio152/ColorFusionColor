@@ -172,9 +172,9 @@ function exibirFeedback(titulo, texto, cor) {
 }
 
 function avancarParaFase2() {
-    let progressoAtual = parseInt(localStorage.getItem('progressoColorFusion')) || 1;
+    let progressoAtual = parseInt(sessionStorage.getItem('progressoColorFusion')) || 1;
     if (progressoAtual < 2) {
-        localStorage.setItem('progressoColorFusion', '2');
+        sessionStorage.setItem('progressoColorFusion', '2');
     }
 
     sessionStorage.setItem('voltarParaOMapa', 'true');

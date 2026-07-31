@@ -1,5 +1,5 @@
-// Puxa o progresso do localStorage
-let savedLevel = localStorage.getItem('progressoColorFusion');
+// Puxa o progresso do sessionStorage
+let savedLevel = sessionStorage.getItem('progressoColorFusion');
 let unlockedLevel = savedLevel ? parseInt(savedLevel) : 1;
 let selectedPhase = unlockedLevel > 5 ? 5 : unlockedLevel; 
 let currentPhase = 1;
@@ -20,13 +20,13 @@ window.onload = () => {
 
     if (isReload) {
         // Se deu F5, apaga todo o progresso e limpa a sessão
-        localStorage.removeItem('progressoColorFusion');
+        sessionStorage.removeItem('progressoColorFusion');
         sessionStorage.clear();
         unlockedLevel = 1;
         selectedPhase = 1;
     } else {
         // Se NÃO foi F5, carrega o progresso salvo normalmente
-        savedLevel = localStorage.getItem('progressoColorFusion');
+        savedLevel = sessionStorage.getItem('progressoColorFusion');
         unlockedLevel = savedLevel ? parseInt(savedLevel) : 1;
         selectedPhase = unlockedLevel > 5 ? 5 : unlockedLevel;
     }
@@ -38,7 +38,7 @@ window.onload = () => {
         
         if (unlockedLevel < faseNum) {
             unlockedLevel = faseNum;
-            localStorage.setItem('progressoColorFusion', unlockedLevel.toString());
+            sessionStorage.setItem('progressoColorFusion', unlockedLevel.toString());
         }
         
         document.getElementById('main-menu').style.display = 'none';
@@ -97,7 +97,7 @@ const mixes = {
 function showMap() {
     sessionStorage.setItem('voltarParaOMapa', 'true');
 
-    savedLevel = localStorage.getItem('progressoColorFusion');
+    savedLevel = sessionStorage.getItem('progressoColorFusion');
     unlockedLevel = savedLevel ? parseInt(savedLevel) : 1;
     selectedPhase = unlockedLevel > 5 ? 5 : unlockedLevel;
 
@@ -390,7 +390,7 @@ function finishPhase() {
         unlockedLevel = Math.max(unlockedLevel, currentPhase + 1);
         selectedPhase = Math.min(unlockedLevel, 5); 
         
-        localStorage.setItem('progressoColorFusion', unlockedLevel.toString());
+        sessionStorage.setItem('progressoColorFusion', unlockedLevel.toString());
     }
     const vic = document.getElementById('victory-overlay');
     if(vic) vic.style.display = 'none';

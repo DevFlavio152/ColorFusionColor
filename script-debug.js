@@ -120,7 +120,7 @@ function criarPainelDebug() {
         btn.style.fontWeight = 'bold';
         
         btn.onclick = () => {
-            localStorage.setItem('progressoColorFusion', i.toString());
+            sessionStorage.setItem('progressoColorFusion', i.toString());
             sessionStorage.setItem('voltarParaOMapa', 'true'); 
             sessionStorage.setItem('usandoCheat', 'true'); 
             window.location.href = 'index.html?map=true'; 

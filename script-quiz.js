@@ -29,23 +29,16 @@ let acertosTemaAtual = 0;
 let relatorioFinal = [];
 let acertosTotais = 0;
 
-// CONTROLE DE MÚSICA DE FUNDO DOS CRÉDITOS
-let musicaCreditos = null;
-
-function pararMusicaCreditos() {
-  if (musicaCreditos) {
-    musicaCreditos.pause();
-    musicaCreditos.currentTime = 0;
-  }
-}
-
 function mostrarTela(id) {
   document.querySelectorAll('.card-modal').forEach(el => el.style.display = 'none');
   document.getElementById(id).style.display = 'block';
 }
 
 function iniciarQuiz() {
-  pararMusicaCreditos(); // Garante que se estivesse nos créditos, a música pare ao reiniciar
+  // Restore a BGM do Quiz caso o jogador reinicie vindo da tela de créditos
+  if (typeof trocarBGM === 'function') {
+    trocarBGM('Audio/bgm-quiz.mp3');
+  }
   questaoAtual = 0;
   acertosTotais = 0;
   acertosTemaAtual = 0;
@@ -63,14 +56,30 @@ function mostrarQuestao() {
   const containerOpcoes = document.getElementById('opcoes-container');
   containerOpcoes.innerHTML = '';
 
-  q.opcoes.forEach((opcaoTexto, index) => {
+  // 1. Cria um array com os números [0, 1, 2] (índices originais)
+  let indicesEmbaralhados = q.opcoes.map((_, index) => index);
+
+  // 2. Embaralha esses números aleatoriamente (Algoritmo Fisher-Yates)
+  for (let i = indicesEmbaralhados.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indicesEmbaralhados[i], indicesEmbaralhados[j]] = [indicesEmbaralhados[j], indicesEmbaralhados[i]];
+  }
+
+  // 3. Cria os botões usando a ordem embaralhada
+  indicesEmbaralhados.forEach(indiceOriginal => {
     const btn = document.createElement('button');
     btn.className = 'opcao-btn';
-    btn.innerText = opcaoTexto;
+    
+    // Pega o texto da opção baseada no índice original
+    btn.innerText = q.opcoes[indiceOriginal];
+    
     btn.onclick = () => {
       if (typeof tocarSom === 'function') tocarSom('click');
-      registrarResposta(index, q.correta, q.tema);
+      
+      // Compara o índice original com a resposta correta registrada no banco
+      registrarResposta(indiceOriginal, q.correta, q.tema);
     };
+    
     containerOpcoes.appendChild(btn);
   });
 }
@@ -148,39 +157,17 @@ function gerarPenteFino() {
 }
 
 function mostrarCreditos() {
-    // 1. 🛑 PARAR A MÚSICA DE FUNDO DO QUIZ / PÁGINA
-    
-    // Se o seu script-audio.js tiver uma função de parar BGM, ele chama aqui:
-    if (typeof pararBGM === 'function') pararBGM();
-    if (typeof pausarBGM === 'function') pausarBGM();
-
-    // Se a música for uma tag <audio> no HTML, pausa todas:
-    document.querySelectorAll('audio').forEach(a => {
-        a.pause();
-        a.currentTime = 0;
-    });
-
-    // Se o script-audio.js usou uma variável global no window:
-    if (window.bgm) { window.bgm.pause(); window.bgm.currentTime = 0; }
-    if (window.audioBGM) { window.audioBGM.pause(); window.audioBGM.currentTime = 0; }
-    if (window.currentBGM) { window.currentBGM.pause(); window.currentBGM.currentTime = 0; }
-
-    // -------------------------------------------------------------
-
-    // 2. 🎵 TOCAR APENAS A MÚSICA DOS CRÉDITOS
-    pararMusicaCreditos(); // Reseta se já estava tocando
-  
-    const srcCreditos = (typeof sfxMap !== 'undefined' && sfxMap['creditos']) ? sfxMap['creditos'] : 'Audio/bgm-creditos.mp3';
-  
-    musicaCreditos = new Audio(srcCreditos);
-    musicaCreditos.loop = true;
-    musicaCreditos.play().catch(err => console.warn("Erro ao tocar música de créditos:", err));
-
-    mostrarTela('tela-creditos');
+  // 🎵 Troca a BGM do Quiz pela BGM de Créditos usando o AudioManager
+  if (typeof trocarBGM === 'function') {
+    trocarBGM('Audio/bgm-creditos.mp3');
+  }
+  mostrarTela('tela-creditos');
 }
 
 // Função para voltar para a fase de cores quente e fria
 function backToCores() {
-  pararMusicaCreditos(); // Para a música dos créditos ao sair da página
+  if (typeof pararBGM === 'function') {
+    pararBGM();
+  }
   window.location.href = 'cores.html';
 }
