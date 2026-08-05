@@ -136,7 +136,7 @@ body {
 /* --- SISTEMA DE CRÉDITOS ANIMADOS --- */
 
 .creditos-viewport {
-    height: 300px; /* Levemente ampliado para melhor leitura */
+    height: 300px;
     overflow: hidden;
     position: relative;
     background: #f8fafc;
@@ -148,18 +148,13 @@ body {
 .creditos-scroll {
     position: absolute;
     width: 100%;
-    /* Tempo ajustado para 22s devido ao novo volume de texto */
     animation: subirCreditos 22s linear infinite;
     padding-top: 20px;
 }
 
 @keyframes subirCreditos {
-    0% {
-        transform: translateY(300px);
-    }
-    100% {
-        transform: translateY(-100%);
-    }
+    0% { transform: translateY(300px); }
+    100% { transform: translateY(-100%); }
 }
 
 .credito-secao {
@@ -184,7 +179,6 @@ body {
     margin: 6px 0 2px 0;
 }
 
-/* Novo estilo para os cargos institucionais */
 .cargo-credito {
     font-size: 0.75rem;
     color: var(--text-light);
@@ -221,10 +215,10 @@ body {
     font-weight: bold;
 }
 
-/* Pausa a animação se passar o mouse ou segurar na tela */
 .creditos-viewport:hover .creditos-scroll {
     animation-play-state: paused;
 }
+
 /* =========================================
    BOTÃO VOLTAR PARA quente fria
 ========================================= */
@@ -243,13 +237,13 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    z-index: 1050; /* Garante que fique acima de tudo */
+    z-index: 1050;
     transition: all 0.2s ease;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .btn-nav-back:hover {
-    background: #d4af37; /* Fica dourado ao passar o mouse */
+    background: #d4af37;
     color: #fff;
     transform: translateY(-2px);
     box-shadow: 0 6px 15px rgba(212, 175, 55, 0.3);
@@ -263,23 +257,25 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     text-align: center;
-    gap: 8px;
+    gap: 12px;
     border-bottom: 2px solid #f0f4f8;
     padding-bottom: 15px;
     margin-bottom: 15px;
 }
 
 .mestre-avatar {
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
     object-fit: contain;
     background: #f8fafc;
     border-radius: 50%;
-    border: 2px solid var(--gold);
+    border: 3px solid var(--gold);
     padding: 5px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease;
+    margin: 0 auto;
 }
 
 .mestre-avatar:hover {
@@ -310,16 +306,49 @@ body {
     font-weight: 500;
 }
 
+/* =========================================
+   AVATAR NO CANTO INFERIOR DIREITO (QUIZ)
+========================================= */
+.avatar-canto {
+    position: absolute;
+    bottom: -35px; 
+    right: -30px;
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    background: #f8fafc;
+    border-radius: 50%;
+    border: 4px solid var(--gold);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    z-index: 10;
+    transition: transform 0.3s ease;
+}
+
+.avatar-canto:hover {
+    transform: scale(1.1) rotate(-5deg);
+}
+
 /* Ajustes Responsivos para Dispositivos Móveis */
 @media (max-width: 480px) {
     .mestre-avatar {
-        width: 95px;
-        height: 95px;
+        width: 120px;
+        height: 120px;
     }
     .card-titulo {
         font-size: 1.15rem;
     }
     .card-subtitulo {
         font-size: 0.82rem;
+    }
+    .avatar-canto {
+        width: 110px;
+        height: 110px;
+        bottom: -25px;
+        right: -20px;
+        border-width: 3px;
+    }
+    
+    #tela-quiz {
+        padding-bottom: 50px !important;
     }
 }

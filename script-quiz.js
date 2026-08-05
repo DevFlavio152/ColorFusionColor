@@ -35,7 +35,6 @@ function mostrarTela(id) {
 }
 
 function iniciarQuiz() {
-  // Restore a BGM do Quiz caso o jogador reinicie vindo da tela de créditos
   if (typeof trocarBGM === 'function') {
     trocarBGM('Audio/bgm-quiz.mp3');
   }
@@ -56,27 +55,19 @@ function mostrarQuestao() {
   const containerOpcoes = document.getElementById('opcoes-container');
   containerOpcoes.innerHTML = '';
 
-  // 1. Cria um array com os números [0, 1, 2] (índices originais)
   let indicesEmbaralhados = q.opcoes.map((_, index) => index);
-
-  // 2. Embaralha esses números aleatoriamente (Algoritmo Fisher-Yates)
   for (let i = indicesEmbaralhados.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [indicesEmbaralhados[i], indicesEmbaralhados[j]] = [indicesEmbaralhados[j], indicesEmbaralhados[i]];
   }
 
-  // 3. Cria os botões usando a ordem embaralhada
   indicesEmbaralhados.forEach(indiceOriginal => {
     const btn = document.createElement('button');
     btn.className = 'opcao-btn';
-    
-    // Pega o texto da opção baseada no índice original
     btn.innerText = q.opcoes[indiceOriginal];
     
     btn.onclick = () => {
       if (typeof tocarSom === 'function') tocarSom('click');
-      
-      // Compara o índice original com a resposta correta registrada no banco
       registrarResposta(indiceOriginal, q.correta, q.tema);
     };
     
@@ -102,22 +93,31 @@ function registrarResposta(escolha, correta, tema) {
 function prepararFeedback() {
   const titulo = document.getElementById('feedback-titulo');
   const texto = document.getElementById('feedback-texto');
+  
+  // Captura a imagem do avatar de feedback no HTML
+  const avatarFeedback = document.getElementById('avatar-feedback'); 
   const tema = questoes[questaoAtual].tema;
 
   titulo.innerText = `Análise: ${tema}`;
 
+  // LÓGICA DE TROCA DE IMAGENS DO BONECO
   if (acertosTemaAtual === 2) {
     if (typeof tocarSom === 'function') tocarSom('acerto');
     texto.innerText = "Perfeito! Você dominou completamente este conceito. (2/2 Acertos)";
     texto.style.color = "var(--success)";
+    avatarFeedback.src = "Assets/personagemjoinhaquiz.png"; // 🟢 POSIÇÃO DE JOINHA
+    
   } else if (acertosTemaAtual === 1) {
     if (typeof tocarSom === 'function') tocarSom('acerto');
     texto.innerText = "Bom, mas pode melhorar. Revise a teoria deste conceito. (1/2 Acertos)";
     texto.style.color = "var(--gold)";
+    avatarFeedback.src = "Assets/personagemjoinhaquiz.png"; // 🟢 POSIÇÃO DE JOINHA TAMBÉM
+    
   } else {
     if (typeof tocarSom === 'function') tocarSom('erro');
     texto.innerText = "Atenção necessária! Sua curadoria falhou neste tema. (0/2 Acertos)";
     texto.style.color = "var(--error)";
+    avatarFeedback.src = "Assets/personagemerro.png"; // 🔴 POSIÇÃO DE ERRO
   }
 
   mostrarTela('tela-feedback');
@@ -157,14 +157,12 @@ function gerarPenteFino() {
 }
 
 function mostrarCreditos() {
-  // 🎵 Troca a BGM do Quiz pela BGM de Créditos usando o AudioManager
   if (typeof trocarBGM === 'function') {
     trocarBGM('Audio/bgm-creditos.mp3');
   }
   mostrarTela('tela-creditos');
 }
 
-// Função para voltar para a fase de cores quente e fria
 function backToCores() {
   if (typeof pararBGM === 'function') {
     pararBGM();

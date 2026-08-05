@@ -31,21 +31,32 @@
             <button class="btn btn-gold" onclick="iniciarQuiz()">INICIAR</button>
         </div>
 
-        <div id="tela-quiz" class="card-modal" style="display:none;">
+        <!-- 🟢 AQUI ESTÁ O BONECO NO CANTO INFERIOR DIREITO DA PERGUNTA -->
+        <div id="tela-quiz" class="card-modal" style="display:none; position: relative; padding-bottom: 60px;">
             <div id="quiz-header">
                 <span id="badge-tema" class="badge">Tema</span>
                 <span id="contador-questao">1/14</span>
             </div>
             <h3 id="texto-pergunta" style="margin: 20px 0; color: var(--text-main);"></h3>
-            <div id="opcoes-container"></div>
+            
+            <div id="opcoes-container" style="position: relative; z-index: 2;"></div>
+
+            <img src="Assets/personagemquestionando.png" alt="Mestre Questionando" class="avatar-canto">
         </div>
 
-        <div id="tela-feedback" class="card-modal" style="display:none;">
-            <h2 id="feedback-titulo" style="color:var(--text-main);">Análise do Tema</h2>
-            <div class="dida-container">
+        <div id="tela-feedback" class="card-modal" style="display:none; position: relative; padding-bottom: 60px;">
+            
+            <h2 id="feedback-titulo" style="color:var(--text-main); margin-top: 10px;">Análise do Tema</h2>
+            
+            <div class="dida-container" style="position: relative; z-index: 2;">
                 <p id="feedback-texto" style="margin: 0; font-weight: 500; text-align: center; font-size: 1.1rem;"></p>
             </div>
-            <button class="btn btn-gold" onclick="proximaPergunta()">PROSSEGUIR</button>
+            
+            <button class="btn btn-gold" onclick="proximaPergunta()" style="position: relative; z-index: 2;">PROSSEGUIR</button>
+
+            <!-- 🟢 BONECO DO FEEDBACK MOVIDO PARA O CANTO -->
+            <img id="avatar-feedback" src="Assets/personagemjoinhaquiz.png" alt="Mestre Feedback" class="avatar-canto">
+            
         </div>
 
         <div id="tela-resultado" class="card-modal" style="display:none;">
@@ -56,10 +67,9 @@
         </div>
 
         <div id="tela-creditos" class="card-modal" style="display:none; overflow: hidden;">
-            <!-- 🟢 PERFIL DO MESTRE DAS CORES -->
-    <div class="mestre-header" style="border-bottom: none; padding-bottom: 0; margin-bottom: 5px;">
-        <img src="Assets/personagemjoinha.png" alt="Mestre das Cores" class="mestre-avatar" style="width: 130px; height: 130px;">
-    </div>
+            <div class="mestre-header" style="border-bottom: none; padding-bottom: 0; margin-bottom: 5px;">
+                <img src="Assets/personagemjoinha.png" alt="Mestre das Cores" class="mestre-avatar" style="width: 130px; height: 130px;">
+            </div>
             <h2 style="color:var(--text-main); margin-bottom: 10px;">OBRIGADO POR JOGAR!</h2>
             
             <div class="creditos-viewport">
