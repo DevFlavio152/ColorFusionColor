@@ -164,4 +164,4 @@ function criarPainelDebug() {
 }
 
 // Inicializa o painel
-criarPainelDebug();
+//criarPainelDebug();
