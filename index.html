@@ -98,15 +98,16 @@
     </div>
 
     <div id="victory-overlay" class="phase-overlay" style="display: none;">
-        <div class="victory-card">
-            <h1>Magnífico!</h1>
-            <p>O círculo está completo!</p>
-            <img id="img-circulo-vitoria" 
-                 src="https://i.postimg.cc/rwmFV97B/circulo-cromatico-(1).png" 
-                 alt="Círculo Cromático">
-            <button onclick="finishPhase()">Voltar ao Mapa</button>
-        </div>
+    <div class="victory-card">
+        <h1>Magnífico!</h1>
+        <p>O círculo está completo!</p>
+        <!-- Mude apenas o src na linha abaixo -->
+        <img id="img-circulo-vitoria" 
+             src="Assets/circulo-vitoria.png" 
+             alt="Círculo Cromático">
+        <button onclick="finishPhase()">Voltar ao Mapa</button>
     </div>
+</div>
 
     <div id="loading-overlay" class="full-screen-overlay" style="display: none; flex-direction: column; z-index: 9999; background: #455564; align-items: center; justify-content: center; position: fixed; inset: 0;">
         <div class="loader"></div>
